@@ -1,0 +1,618 @@
+Running in conda env: kv_env
+Illegal option --
+Usage: /usr/bin/which [-a] args
+/home/huong.nguyenthi2/miniconda3/envs/kv_env/lib/python3.12/site-packages/hydra/_internal/defaults_list.py:251: UserWarning: In 'config': Defaults list is missing `_self_`. See https://hydra.cc/docs/1.2/upgrades/1.0_to_1.1/default_composition_order for more information
+  warnings.warn(msg, UserWarning)
+/home/huong.nguyenthi2/miniconda3/envs/kv_env/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/huong.nguyenthi2/miniconda3/envs/kv_env/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+Processing folders:   0%|          | 0/3216 [00:00<?, ?it/s]                                                            Processing folders:   0%|          | 0/3216 [00:00<?, ?it/s]Processing A100P10: 10 files
+
+Batch processing:   0%|          | 0/41 [00:00<?, ?it/s][A
+Batch processing:   2%|▏         | 1/41 [00:00<00:34,  1.15it/s][A
+Batch processing:   5%|▍         | 2/41 [00:01<00:22,  1.72it/s][A
+Batch processing:   7%|▋         | 3/41 [00:01<00:18,  2.07it/s][A
+Batch processing:  10%|▉         | 4/41 [00:01<00:16,  2.28it/s][A
+Batch processing:  12%|█▏        | 5/41 [00:02<00:14,  2.42it/s][A
+Batch processing:  15%|█▍        | 6/41 [00:02<00:13,  2.51it/s][A
+Batch processing:  17%|█▋        | 7/41 [00:03<00:13,  2.56it/s][A
+Batch processing:  20%|█▉        | 8/41 [00:03<00:12,  2.61it/s][A
+Batch processing:  22%|██▏       | 9/41 [00:03<00:12,  2.63it/s][A
+Batch processing:  24%|██▍       | 10/41 [00:04<00:11,  2.65it/s][A
+Batch processing:  27%|██▋       | 11/41 [00:04<00:11,  2.65it/s][A
+Batch processing:  29%|██▉       | 12/41 [00:04<00:10,  2.65it/s][A
+Batch processing:  32%|███▏      | 13/41 [00:05<00:10,  2.66it/s][A
+Batch processing:  34%|███▍      | 14/41 [00:05<00:10,  2.67it/s][A
+Batch processing:  37%|███▋      | 15/41 [00:06<00:09,  2.67it/s][A
+Batch processing:  39%|███▉      | 16/41 [00:06<00:09,  2.69it/s][A
+Batch processing:  41%|████▏     | 17/41 [00:06<00:08,  2.69it/s][A
+Batch processing:  44%|████▍     | 18/41 [00:07<00:08,  2.69it/s][A
+Batch processing:  46%|████▋     | 19/41 [00:07<00:08,  2.70it/s][A
+Batch processing:  49%|████▉     | 20/41 [00:07<00:07,  2.69it/s][A
+Batch processing:  51%|█████     | 21/41 [00:08<00:07,  2.69it/s][A
+Batch processing:  54%|█████▎    | 22/41 [00:08<00:07,  2.70it/s][A
+Batch processing:  56%|█████▌    | 23/41 [00:09<00:06,  2.69it/s][A
+Batch processing:  59%|█████▊    | 24/41 [00:09<00:06,  2.69it/s][A
+Batch processing:  61%|██████    | 25/41 [00:09<00:05,  2.69it/s][A
+Batch processing:  63%|██████▎   | 26/41 [00:10<00:05,  2.69it/s][A
+Batch processing:  66%|██████▌   | 27/41 [00:10<00:05,  2.70it/s][A
+Batch processing:  68%|██████▊   | 28/41 [00:10<00:04,  2.70it/s][A
+Batch processing:  71%|███████   | 29/41 [00:11<00:04,  2.69it/s][A
+Batch processing:  73%|███████▎  | 30/41 [00:11<00:04,  2.69it/s][A
+Batch processing:  76%|███████▌  | 31/41 [00:12<00:03,  2.69it/s][A
+Batch processing:  78%|███████▊  | 32/41 [00:12<00:03,  2.69it/s][A
+Batch processing:  80%|████████  | 33/41 [00:12<00:02,  2.68it/s][A
+Batch processing:  83%|████████▎ | 34/41 [00:13<00:02,  2.68it/s][A
+Batch processing:  85%|████████▌ | 35/41 [00:13<00:02,  2.67it/s][A
+Batch processing:  88%|████████▊ | 36/41 [00:13<00:01,  2.68it/s][A
+Batch processing:  90%|█████████ | 37/41 [00:14<00:01,  2.67it/s][A
+Batch processing:  93%|█████████▎| 38/41 [00:14<00:01,  2.68it/s][A
+Batch processing:  95%|█████████▌| 39/41 [00:15<00:00,  2.67it/s][A
+Batch processing:  98%|█████████▊| 40/41 [00:15<00:00,  2.65it/s][A
+Batch processing: 100%|██████████| 41/41 [00:15<00:00,  3.09it/s][A
+                                                                 [AProcessing folders:   0%|          | 1/3216 [00:24<21:29:27, 24.06s/it]                                                                       Processing folders:   0%|          | 1/3216 [00:24<21:29:27, 24.06s/it]Processing A100P11: 10 files
+
+Batch processing:   0%|          | 0/38 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/38 [00:00<00:13,  2.65it/s][A
+Batch processing:   5%|▌         | 2/38 [00:00<00:13,  2.64it/s][A
+Batch processing:   8%|▊         | 3/38 [00:01<00:13,  2.66it/s][A
+Batch processing:  11%|█         | 4/38 [00:01<00:12,  2.66it/s][A
+Batch processing:  13%|█▎        | 5/38 [00:01<00:12,  2.67it/s][A
+Batch processing:  16%|█▌        | 6/38 [00:02<00:12,  2.66it/s][A
+Batch processing:  18%|█▊        | 7/38 [00:02<00:11,  2.66it/s][A
+Batch processing:  21%|██        | 8/38 [00:02<00:11,  2.68it/s][A
+Batch processing:  24%|██▎       | 9/38 [00:03<00:10,  2.68it/s][A
+Batch processing:  26%|██▋       | 10/38 [00:03<00:10,  2.69it/s][A
+Batch processing:  29%|██▉       | 11/38 [00:04<00:10,  2.68it/s][A
+Batch processing:  32%|███▏      | 12/38 [00:04<00:09,  2.69it/s][A
+Batch processing:  34%|███▍      | 13/38 [00:04<00:09,  2.69it/s][A
+Batch processing:  37%|███▋      | 14/38 [00:05<00:08,  2.69it/s][A
+Batch processing:  39%|███▉      | 15/38 [00:05<00:08,  2.69it/s][A
+Batch processing:  42%|████▏     | 16/38 [00:05<00:08,  2.70it/s][A
+Batch processing:  45%|████▍     | 17/38 [00:06<00:07,  2.70it/s][A
+Batch processing:  47%|████▋     | 18/38 [00:06<00:07,  2.69it/s][A
+Batch processing:  50%|█████     | 19/38 [00:07<00:07,  2.70it/s][A
+Batch processing:  53%|█████▎    | 20/38 [00:07<00:06,  2.69it/s][A
+Batch processing:  55%|█████▌    | 21/38 [00:07<00:06,  2.69it/s][A
+Batch processing:  58%|█████▊    | 22/38 [00:08<00:05,  2.70it/s][A
+Batch processing:  61%|██████    | 23/38 [00:08<00:05,  2.70it/s][A
+Batch processing:  63%|██████▎   | 24/38 [00:08<00:05,  2.70it/s][A
+Batch processing:  66%|██████▌   | 25/38 [00:09<00:04,  2.69it/s][A
+Batch processing:  68%|██████▊   | 26/38 [00:09<00:04,  2.69it/s][A
+Batch processing:  71%|███████   | 27/38 [00:10<00:04,  2.68it/s][A
+Batch processing:  74%|███████▎  | 28/38 [00:10<00:03,  2.67it/s][A
+Batch processing:  76%|███████▋  | 29/38 [00:10<00:03,  2.67it/s][A
+Batch processing:  79%|███████▉  | 30/38 [00:11<00:02,  2.67it/s][A
+Batch processing:  82%|████████▏ | 31/38 [00:11<00:02,  2.66it/s][A
+Batch processing:  84%|████████▍ | 32/38 [00:11<00:02,  2.65it/s][A
+Batch processing:  87%|████████▋ | 33/38 [00:12<00:01,  2.66it/s][A
+Batch processing:  89%|████████▉ | 34/38 [00:12<00:01,  2.67it/s][A
+Batch processing:  92%|█████████▏| 35/38 [00:13<00:01,  2.67it/s][A
+Batch processing:  95%|█████████▍| 36/38 [00:13<00:00,  2.67it/s][A
+Batch processing:  97%|█████████▋| 37/38 [00:13<00:00,  2.67it/s][A
+Batch processing: 100%|██████████| 38/38 [00:14<00:00,  2.78it/s][A
+                                                                 [AProcessing folders:   0%|          | 2/3216 [00:42<18:21:10, 20.56s/it]                                                                       Processing folders:   0%|          | 2/3216 [00:42<18:21:10, 20.56s/it]Processing A100P12: 10 files
+
+Batch processing:   0%|          | 0/35 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/35 [00:00<00:12,  2.69it/s][A
+Batch processing:   6%|▌         | 2/35 [00:00<00:12,  2.65it/s][A
+Batch processing:   9%|▊         | 3/35 [00:01<00:12,  2.66it/s][A
+Batch processing:  11%|█▏        | 4/35 [00:01<00:11,  2.66it/s][A
+Batch processing:  14%|█▍        | 5/35 [00:01<00:11,  2.67it/s][A
+Batch processing:  17%|█▋        | 6/35 [00:02<00:10,  2.66it/s][A
+Batch processing:  20%|██        | 7/35 [00:02<00:10,  2.65it/s][A
+Batch processing:  23%|██▎       | 8/35 [00:03<00:10,  2.66it/s][A
+Batch processing:  26%|██▌       | 9/35 [00:03<00:09,  2.67it/s][A
+Batch processing:  29%|██▊       | 10/35 [00:03<00:09,  2.69it/s][A
+Batch processing:  31%|███▏      | 11/35 [00:04<00:08,  2.68it/s][A
+Batch processing:  34%|███▍      | 12/35 [00:04<00:08,  2.69it/s][A
+Batch processing:  37%|███▋      | 13/35 [00:04<00:08,  2.68it/s][A
+Batch processing:  40%|████      | 14/35 [00:05<00:07,  2.67it/s][A
+Batch processing:  43%|████▎     | 15/35 [00:05<00:07,  2.67it/s][A
+Batch processing:  46%|████▌     | 16/35 [00:05<00:07,  2.66it/s][A
+Batch processing:  49%|████▊     | 17/35 [00:06<00:06,  2.65it/s][A
+Batch processing:  51%|█████▏    | 18/35 [00:06<00:06,  2.65it/s][A
+Batch processing:  54%|█████▍    | 19/35 [00:07<00:06,  2.65it/s][A
+Batch processing:  57%|█████▋    | 20/35 [00:07<00:05,  2.65it/s][A
+Batch processing:  60%|██████    | 21/35 [00:07<00:05,  2.67it/s][A
+Batch processing:  63%|██████▎   | 22/35 [00:08<00:04,  2.68it/s][A
+Batch processing:  66%|██████▌   | 23/35 [00:08<00:04,  2.69it/s][A
+Batch processing:  69%|██████▊   | 24/35 [00:08<00:04,  2.68it/s][A
+Batch processing:  71%|███████▏  | 25/35 [00:09<00:03,  2.69it/s][A
+Batch processing:  74%|███████▍  | 26/35 [00:09<00:03,  2.68it/s][A
+Batch processing:  77%|███████▋  | 27/35 [00:10<00:02,  2.67it/s][A
+Batch processing:  80%|████████  | 28/35 [00:10<00:02,  2.68it/s][A
+Batch processing:  83%|████████▎ | 29/35 [00:10<00:02,  2.67it/s][A
+Batch processing:  86%|████████▌ | 30/35 [00:11<00:01,  2.67it/s][A
+Batch processing:  89%|████████▊ | 31/35 [00:11<00:01,  2.67it/s][A
+Batch processing:  91%|█████████▏| 32/35 [00:11<00:01,  2.67it/s][A
+Batch processing:  94%|█████████▍| 33/35 [00:12<00:00,  2.66it/s][A
+Batch processing:  97%|█████████▋| 34/35 [00:12<00:00,  2.66it/s][A
+Batch processing: 100%|██████████| 35/35 [00:12<00:00,  2.98it/s][A
+                                                                 [AProcessing folders:   0%|          | 3/3216 [00:58<16:37:52, 18.63s/it]                                                                       Processing folders:   0%|          | 3/3216 [00:58<16:37:52, 18.63s/it]Processing A100P13: 10 files
+
+Batch processing:   0%|          | 0/43 [00:00<?, ?it/s][A
+Batch processing:   2%|▏         | 1/43 [00:00<00:15,  2.67it/s][A
+Batch processing:   5%|▍         | 2/43 [00:00<00:15,  2.67it/s][A
+Batch processing:   7%|▋         | 3/43 [00:01<00:14,  2.67it/s][A
+Batch processing:   9%|▉         | 4/43 [00:01<00:14,  2.66it/s][A
+Batch processing:  12%|█▏        | 5/43 [00:01<00:14,  2.67it/s][A
+Batch processing:  14%|█▍        | 6/43 [00:02<00:13,  2.67it/s][A
+Batch processing:  16%|█▋        | 7/43 [00:02<00:13,  2.67it/s][A
+Batch processing:  19%|█▊        | 8/43 [00:02<00:13,  2.67it/s][A
+Batch processing:  21%|██        | 9/43 [00:03<00:12,  2.69it/s][A
+Batch processing:  23%|██▎       | 10/43 [00:03<00:12,  2.68it/s][A
+Batch processing:  26%|██▌       | 11/43 [00:04<00:11,  2.69it/s][A
+Batch processing:  28%|██▊       | 12/43 [00:04<00:11,  2.69it/s][A
+Batch processing:  30%|███       | 13/43 [00:04<00:11,  2.69it/s][A
+Batch processing:  33%|███▎      | 14/43 [00:05<00:10,  2.69it/s][A
+Batch processing:  35%|███▍      | 15/43 [00:05<00:10,  2.69it/s][A
+Batch processing:  37%|███▋      | 16/43 [00:05<00:10,  2.70it/s][A
+Batch processing:  40%|███▉      | 17/43 [00:06<00:09,  2.70it/s][A
+Batch processing:  42%|████▏     | 18/43 [00:06<00:09,  2.70it/s][A
+Batch processing:  44%|████▍     | 19/43 [00:07<00:08,  2.70it/s][A
+Batch processing:  47%|████▋     | 20/43 [00:07<00:08,  2.70it/s][A
+Batch processing:  49%|████▉     | 21/43 [00:07<00:08,  2.69it/s][A
+Batch processing:  51%|█████     | 22/43 [00:08<00:07,  2.70it/s][A
+Batch processing:  53%|█████▎    | 23/43 [00:08<00:07,  2.69it/s][A
+Batch processing:  56%|█████▌    | 24/43 [00:08<00:07,  2.68it/s][A
+Batch processing:  58%|█████▊    | 25/43 [00:09<00:06,  2.67it/s][A
+Batch processing:  60%|██████    | 26/43 [00:09<00:06,  2.68it/s][A
+Batch processing:  63%|██████▎   | 27/43 [00:10<00:05,  2.67it/s][A
+Batch processing:  65%|██████▌   | 28/43 [00:10<00:05,  2.66it/s][A
+Batch processing:  67%|██████▋   | 29/43 [00:10<00:05,  2.66it/s][A
+Batch processing:  70%|██████▉   | 30/43 [00:11<00:04,  2.66it/s][A
+Batch processing:  72%|███████▏  | 31/43 [00:11<00:04,  2.65it/s][A
+Batch processing:  74%|███████▍  | 32/43 [00:11<00:04,  2.66it/s][A
+Batch processing:  77%|███████▋  | 33/43 [00:12<00:03,  2.66it/s][A
+Batch processing:  79%|███████▉  | 34/43 [00:12<00:03,  2.67it/s][A
+Batch processing:  81%|████████▏ | 35/43 [00:13<00:02,  2.67it/s][A
+Batch processing:  84%|████████▎ | 36/43 [00:13<00:02,  2.68it/s][A
+Batch processing:  86%|████████▌ | 37/43 [00:13<00:02,  2.69it/s][A
+Batch processing:  88%|████████▊ | 38/43 [00:14<00:01,  2.69it/s][A
+Batch processing:  91%|█████████ | 39/43 [00:14<00:01,  2.68it/s][A
+Batch processing:  93%|█████████▎| 40/43 [00:14<00:01,  2.68it/s][A
+Batch processing:  95%|█████████▌| 41/43 [00:15<00:00,  2.68it/s][A
+Batch processing:  98%|█████████▊| 42/43 [00:15<00:00,  2.68it/s][A
+Batch processing: 100%|██████████| 43/43 [00:15<00:00,  3.03it/s][A
+                                                                 [AProcessing folders:   0%|          | 4/3216 [01:18<17:12:30, 19.29s/it]                                                                       Processing folders:   0%|          | 4/3216 [01:18<17:12:30, 19.29s/it]Processing A100P16: 10 files
+
+Batch processing:   0%|          | 0/39 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/39 [00:00<00:14,  2.69it/s][A
+Batch processing:   5%|▌         | 2/39 [00:00<00:13,  2.71it/s][A
+Batch processing:   8%|▊         | 3/39 [00:01<00:13,  2.69it/s][A
+Batch processing:  10%|█         | 4/39 [00:01<00:12,  2.70it/s][A
+Batch processing:  13%|█▎        | 5/39 [00:01<00:12,  2.70it/s][A
+Batch processing:  15%|█▌        | 6/39 [00:02<00:12,  2.70it/s][A
+Batch processing:  18%|█▊        | 7/39 [00:02<00:11,  2.70it/s][A
+Batch processing:  21%|██        | 8/39 [00:02<00:11,  2.70it/s][A
+Batch processing:  23%|██▎       | 9/39 [00:03<00:11,  2.69it/s][A
+Batch processing:  26%|██▌       | 10/39 [00:03<00:10,  2.68it/s][A
+Batch processing:  28%|██▊       | 11/39 [00:04<00:10,  2.69it/s][A
+Batch processing:  31%|███       | 12/39 [00:04<00:10,  2.68it/s][A
+Batch processing:  33%|███▎      | 13/39 [00:04<00:09,  2.69it/s][A
+Batch processing:  36%|███▌      | 14/39 [00:05<00:09,  2.68it/s][A
+Batch processing:  38%|███▊      | 15/39 [00:05<00:09,  2.66it/s][A
+Batch processing:  41%|████      | 16/39 [00:05<00:08,  2.65it/s][A
+Batch processing:  44%|████▎     | 17/39 [00:06<00:08,  2.65it/s][A
+Batch processing:  46%|████▌     | 18/39 [00:06<00:07,  2.65it/s][A
+Batch processing:  49%|████▊     | 19/39 [00:07<00:07,  2.65it/s][A
+Batch processing:  51%|█████▏    | 20/39 [00:07<00:07,  2.66it/s][A
+Batch processing:  54%|█████▍    | 21/39 [00:07<00:06,  2.66it/s][A
+Batch processing:  56%|█████▋    | 22/39 [00:08<00:06,  2.66it/s][A
+Batch processing:  59%|█████▉    | 23/39 [00:08<00:06,  2.65it/s][A
+Batch processing:  62%|██████▏   | 24/39 [00:08<00:05,  2.65it/s][A
+Batch processing:  64%|██████▍   | 25/39 [00:09<00:05,  2.66it/s][A
+Batch processing:  67%|██████▋   | 26/39 [00:09<00:04,  2.67it/s][A
+Batch processing:  69%|██████▉   | 27/39 [00:10<00:04,  2.67it/s][A
+Batch processing:  72%|███████▏  | 28/39 [00:10<00:04,  2.69it/s][A
+Batch processing:  74%|███████▍  | 29/39 [00:10<00:03,  2.69it/s][A
+Batch processing:  77%|███████▋  | 30/39 [00:11<00:03,  2.69it/s][A
+Batch processing:  79%|███████▉  | 31/39 [00:11<00:02,  2.69it/s][A
+Batch processing:  82%|████████▏ | 32/39 [00:11<00:02,  2.69it/s][A
+Batch processing:  85%|████████▍ | 33/39 [00:12<00:02,  2.69it/s][A
+Batch processing:  87%|████████▋ | 34/39 [00:12<00:01,  2.68it/s][A
+Batch processing:  90%|████████▉ | 35/39 [00:13<00:01,  2.68it/s][A
+Batch processing:  92%|█████████▏| 36/39 [00:13<00:01,  2.68it/s][A
+Batch processing:  95%|█████████▍| 37/39 [00:13<00:00,  2.69it/s][A
+Batch processing:  97%|█████████▋| 38/39 [00:14<00:00,  2.70it/s][A
+                                                                 [AProcessing folders:   0%|          | 5/3216 [01:37<16:51:31, 18.90s/it]                                                                       Processing folders:   0%|          | 5/3216 [01:37<16:51:31, 18.90s/it]Processing A100P17: 10 files
+
+Batch processing:   0%|          | 0/37 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/37 [00:00<00:13,  2.68it/s][A
+Batch processing:   5%|▌         | 2/37 [00:00<00:13,  2.68it/s][A
+Batch processing:   8%|▊         | 3/37 [00:01<00:12,  2.68it/s][A
+Batch processing:  11%|█         | 4/37 [00:01<00:12,  2.68it/s][A
+Batch processing:  14%|█▎        | 5/37 [00:01<00:11,  2.68it/s][A
+Batch processing:  16%|█▌        | 6/37 [00:02<00:11,  2.68it/s][A
+Batch processing:  19%|█▉        | 7/37 [00:02<00:11,  2.68it/s][A
+Batch processing:  22%|██▏       | 8/37 [00:02<00:10,  2.67it/s][A
+Batch processing:  24%|██▍       | 9/37 [00:03<00:10,  2.67it/s][A
+Batch processing:  27%|██▋       | 10/37 [00:03<00:10,  2.67it/s][A
+Batch processing:  30%|██▉       | 11/37 [00:04<00:09,  2.67it/s][A
+Batch processing:  32%|███▏      | 12/37 [00:04<00:09,  2.66it/s][A
+Batch processing:  35%|███▌      | 13/37 [00:04<00:08,  2.85it/s][A
+Batch processing:  38%|███▊      | 14/37 [00:05<00:07,  3.00it/s][A
+Batch processing:  41%|████      | 15/37 [00:05<00:07,  3.10it/s][A
+Batch processing:  43%|████▎     | 16/37 [00:05<00:06,  3.18it/s][A
+Batch processing:  46%|████▌     | 17/37 [00:05<00:06,  3.24it/s][A
+Batch processing:  49%|████▊     | 18/37 [00:06<00:05,  3.27it/s][A
+Batch processing:  51%|█████▏    | 19/37 [00:06<00:05,  3.30it/s][A
+Batch processing:  54%|█████▍    | 20/37 [00:06<00:05,  3.33it/s][A
+Batch processing:  57%|█████▋    | 21/37 [00:07<00:04,  3.35it/s][A
+Batch processing:  59%|█████▉    | 22/37 [00:07<00:04,  3.37it/s][A
+Batch processing:  62%|██████▏   | 23/37 [00:07<00:04,  3.39it/s][A
+Batch processing:  65%|██████▍   | 24/37 [00:08<00:03,  3.40it/s][A
+Batch processing:  68%|██████▊   | 25/37 [00:08<00:03,  3.39it/s][A
+Batch processing:  70%|███████   | 26/37 [00:08<00:03,  3.39it/s][A
+Batch processing:  73%|███████▎  | 27/37 [00:08<00:02,  3.39it/s][A
+Batch processing:  76%|███████▌  | 28/37 [00:09<00:02,  3.38it/s][A
+Batch processing:  78%|███████▊  | 29/37 [00:09<00:02,  3.38it/s][A
+Batch processing:  81%|████████  | 30/37 [00:09<00:02,  3.38it/s][A
+Batch processing:  84%|████████▍ | 31/37 [00:10<00:01,  3.38it/s][A
+Batch processing:  86%|████████▋ | 32/37 [00:10<00:01,  3.39it/s][A
+Batch processing:  89%|████████▉ | 33/37 [00:10<00:01,  3.39it/s][A
+Batch processing:  92%|█████████▏| 34/37 [00:10<00:00,  3.39it/s][A
+Batch processing:  95%|█████████▍| 35/37 [00:11<00:00,  3.39it/s][A
+Batch processing:  97%|█████████▋| 36/37 [00:11<00:00,  3.40it/s][A
+Batch processing: 100%|██████████| 37/37 [00:11<00:00,  4.09it/s][A
+                                                                 [AProcessing folders:   0%|          | 6/3216 [01:51<15:39:31, 17.56s/it]                                                                       Processing folders:   0%|          | 6/3216 [01:51<15:39:31, 17.56s/it]Processing A100P19: 10 files
+
+Batch processing:   0%|          | 0/38 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/38 [00:00<00:24,  1.51it/s][A
+Batch processing:   5%|▌         | 2/38 [00:01<00:23,  1.51it/s][A
+Batch processing:   8%|▊         | 3/38 [00:01<00:23,  1.51it/s][A
+Batch processing:  11%|█         | 4/38 [00:02<00:22,  1.51it/s][A
+Batch processing:  13%|█▎        | 5/38 [00:03<00:21,  1.51it/s][A
+Batch processing:  16%|█▌        | 6/38 [00:03<00:21,  1.52it/s][A
+Batch processing:  18%|█▊        | 7/38 [00:04<00:19,  1.61it/s][A
+Batch processing:  21%|██        | 8/38 [00:04<00:15,  1.93it/s][A
+Batch processing:  24%|██▎       | 9/38 [00:05<00:15,  1.87it/s][A
+Batch processing:  26%|██▋       | 10/38 [00:06<00:16,  1.75it/s][A
+Batch processing:  29%|██▉       | 11/38 [00:06<00:16,  1.67it/s][A
+Batch processing:  32%|███▏      | 12/38 [00:07<00:16,  1.62it/s][A
+Batch processing:  34%|███▍      | 13/38 [00:08<00:15,  1.58it/s][A
+Batch processing:  37%|███▋      | 14/38 [00:08<00:15,  1.56it/s][A
+Batch processing:  39%|███▉      | 15/38 [00:09<00:14,  1.54it/s][A
+Batch processing:  42%|████▏     | 16/38 [00:10<00:14,  1.53it/s][A
+Batch processing:  45%|████▍     | 17/38 [00:10<00:13,  1.52it/s][A
+Batch processing:  47%|████▋     | 18/38 [00:11<00:13,  1.52it/s][A
+Batch processing:  50%|█████     | 19/38 [00:11<00:12,  1.52it/s][A
+Batch processing:  53%|█████▎    | 20/38 [00:12<00:11,  1.51it/s][A
+Batch processing:  55%|█████▌    | 21/38 [00:13<00:11,  1.51it/s][A
+Batch processing:  58%|█████▊    | 22/38 [00:13<00:10,  1.51it/s][A
+Batch processing:  61%|██████    | 23/38 [00:14<00:09,  1.51it/s][A
+Batch processing:  63%|██████▎   | 24/38 [00:15<00:09,  1.51it/s][A
+Batch processing:  66%|██████▌   | 25/38 [00:15<00:08,  1.50it/s][A
+Batch processing:  68%|██████▊   | 26/38 [00:16<00:07,  1.51it/s][A
+Batch processing:  71%|███████   | 27/38 [00:17<00:07,  1.51it/s][A
+Batch processing:  74%|███████▎  | 28/38 [00:17<00:06,  1.51it/s][A
+Batch processing:  76%|███████▋  | 29/38 [00:18<00:05,  1.51it/s][A
+Batch processing:  79%|███████▉  | 30/38 [00:19<00:05,  1.51it/s][A
+Batch processing:  82%|████████▏ | 31/38 [00:19<00:04,  1.51it/s][A
+Batch processing:  84%|████████▍ | 32/38 [00:20<00:03,  1.51it/s][A
+Batch processing:  87%|████████▋ | 33/38 [00:21<00:03,  1.51it/s][A
+Batch processing:  89%|████████▉ | 34/38 [00:21<00:02,  1.50it/s][A
+Batch processing:  92%|█████████▏| 35/38 [00:22<00:01,  1.51it/s][A
+Batch processing:  95%|█████████▍| 36/38 [00:23<00:01,  1.51it/s][A
+Batch processing:  97%|█████████▋| 37/38 [00:23<00:00,  1.51it/s][A
+Batch processing: 100%|██████████| 38/38 [00:24<00:00,  1.80it/s][A
+                                                                 [AProcessing folders:   0%|          | 7/3216 [02:19<18:35:57, 20.87s/it]                                                                       Processing folders:   0%|          | 7/3216 [02:19<18:35:57, 20.87s/it]Processing A100P2: 10 files
+
+Batch processing:   0%|          | 0/47 [00:00<?, ?it/s][A
+Batch processing:   2%|▏         | 1/47 [00:00<00:30,  1.51it/s][A
+Batch processing:   4%|▍         | 2/47 [00:02<00:54,  1.22s/it][A
+Batch processing:   6%|▋         | 3/47 [00:02<00:42,  1.04it/s][A
+Batch processing:   9%|▊         | 4/47 [00:03<00:36,  1.19it/s][A
+Batch processing:  11%|█         | 5/47 [00:04<00:32,  1.28it/s][A
+Batch processing:  13%|█▎        | 6/47 [00:04<00:30,  1.35it/s][A
+Batch processing:  15%|█▍        | 7/47 [00:05<00:28,  1.40it/s][A
+Batch processing:  17%|█▋        | 8/47 [00:06<00:27,  1.44it/s][A
+Batch processing:  19%|█▉        | 9/47 [00:06<00:25,  1.46it/s][A
+Batch processing:  21%|██▏       | 10/47 [00:07<00:25,  1.48it/s][A
+Batch processing:  23%|██▎       | 11/47 [00:08<00:24,  1.48it/s][A
+Batch processing:  26%|██▌       | 12/47 [00:08<00:23,  1.49it/s][A
+Batch processing:  28%|██▊       | 13/47 [00:09<00:22,  1.50it/s][A
+Batch processing:  30%|██▉       | 14/47 [00:10<00:21,  1.50it/s][A
+Batch processing:  32%|███▏      | 15/47 [00:10<00:21,  1.50it/s][A
+Batch processing:  34%|███▍      | 16/47 [00:11<00:20,  1.51it/s][A
+Batch processing:  36%|███▌      | 17/47 [00:12<00:19,  1.51it/s][A
+Batch processing:  38%|███▊      | 18/47 [00:12<00:19,  1.51it/s][A
+Batch processing:  40%|████      | 19/47 [00:13<00:18,  1.51it/s][A
+Batch processing:  43%|████▎     | 20/47 [00:14<00:17,  1.51it/s][A
+Batch processing:  45%|████▍     | 21/47 [00:14<00:17,  1.51it/s][A
+Batch processing:  47%|████▋     | 22/47 [00:15<00:16,  1.51it/s][A
+Batch processing:  49%|████▉     | 23/47 [00:16<00:15,  1.51it/s][A
+Batch processing:  51%|█████     | 24/47 [00:16<00:15,  1.51it/s][A
+Batch processing:  53%|█████▎    | 25/47 [00:17<00:14,  1.50it/s][A
+Batch processing:  55%|█████▌    | 26/47 [00:18<00:13,  1.50it/s][A
+Batch processing:  57%|█████▋    | 27/47 [00:18<00:13,  1.50it/s][A
+Batch processing:  60%|█████▉    | 28/47 [00:19<00:12,  1.51it/s][A
+Batch processing:  62%|██████▏   | 29/47 [00:20<00:11,  1.51it/s][A
+Batch processing:  64%|██████▍   | 30/47 [00:20<00:11,  1.51it/s][A
+Batch processing:  66%|██████▌   | 31/47 [00:21<00:10,  1.51it/s][A
+Batch processing:  68%|██████▊   | 32/47 [00:22<00:09,  1.51it/s][A
+Batch processing:  70%|███████   | 33/47 [00:22<00:09,  1.51it/s][A
+Batch processing:  72%|███████▏  | 34/47 [00:23<00:08,  1.51it/s][A
+Batch processing:  74%|███████▍  | 35/47 [00:24<00:07,  1.51it/s][A
+Batch processing:  77%|███████▋  | 36/47 [00:24<00:07,  1.50it/s][A
+Batch processing:  79%|███████▊  | 37/47 [00:25<00:06,  1.50it/s][A
+Batch processing:  81%|████████  | 38/47 [00:26<00:05,  1.50it/s][A
+Batch processing:  83%|████████▎ | 39/47 [00:26<00:05,  1.50it/s][A
+Batch processing:  85%|████████▌ | 40/47 [00:27<00:04,  1.50it/s][A
+Batch processing:  87%|████████▋ | 41/47 [00:28<00:03,  1.50it/s][A
+Batch processing:  89%|████████▉ | 42/47 [00:28<00:03,  1.50it/s][A
+Batch processing:  91%|█████████▏| 43/47 [00:29<00:02,  1.50it/s][A
+Batch processing:  94%|█████████▎| 44/47 [00:30<00:01,  1.50it/s][A
+Batch processing:  96%|█████████▌| 45/47 [00:30<00:01,  1.50it/s][A
+Batch processing:  98%|█████████▊| 46/47 [00:31<00:00,  1.50it/s][A
+Batch processing: 100%|██████████| 47/47 [00:31<00:00,  1.71it/s][A
+                                                                 [AProcessing folders:   0%|          | 8/3216 [02:56<23:01:46, 25.84s/it]                                                                       Processing folders:   0%|          | 8/3216 [02:56<23:01:46, 25.84s/it]Processing A100P20: 10 files
+
+Batch processing:   0%|          | 0/38 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/38 [00:00<00:24,  1.51it/s][A
+Batch processing:   5%|▌         | 2/38 [00:01<00:23,  1.51it/s][A
+Batch processing:   8%|▊         | 3/38 [00:01<00:23,  1.51it/s][A
+Batch processing:  11%|█         | 4/38 [00:02<00:22,  1.51it/s][A
+Batch processing:  13%|█▎        | 5/38 [00:03<00:21,  1.52it/s][A
+Batch processing:  16%|█▌        | 6/38 [00:03<00:21,  1.51it/s][A
+Batch processing:  18%|█▊        | 7/38 [00:04<00:20,  1.51it/s][A
+Batch processing:  21%|██        | 8/38 [00:05<00:19,  1.52it/s][A
+Batch processing:  24%|██▎       | 9/38 [00:05<00:19,  1.51it/s][A
+Batch processing:  26%|██▋       | 10/38 [00:06<00:18,  1.51it/s][A
+Batch processing:  29%|██▉       | 11/38 [00:07<00:17,  1.51it/s][A
+Batch processing:  32%|███▏      | 12/38 [00:07<00:17,  1.51it/s][A
+Batch processing:  34%|███▍      | 13/38 [00:08<00:16,  1.51it/s][A
+Batch processing:  37%|███▋      | 14/38 [00:09<00:15,  1.51it/s][A
+Batch processing:  39%|███▉      | 15/38 [00:09<00:15,  1.51it/s][A
+Batch processing:  42%|████▏     | 16/38 [00:10<00:14,  1.51it/s][A
+Batch processing:  45%|████▍     | 17/38 [00:11<00:13,  1.53it/s][A
+Batch processing:  47%|████▋     | 18/38 [00:11<00:13,  1.52it/s][A
+Batch processing:  50%|█████     | 19/38 [00:12<00:12,  1.52it/s][A
+Batch processing:  53%|█████▎    | 20/38 [00:13<00:11,  1.52it/s][A
+Batch processing:  55%|█████▌    | 21/38 [00:13<00:11,  1.51it/s][A
+Batch processing:  58%|█████▊    | 22/38 [00:14<00:10,  1.51it/s][A
+Batch processing:  61%|██████    | 23/38 [00:15<00:09,  1.51it/s][A
+Batch processing:  63%|██████▎   | 24/38 [00:15<00:09,  1.51it/s][A
+Batch processing:  66%|██████▌   | 25/38 [00:16<00:08,  1.51it/s][A
+Batch processing:  68%|██████▊   | 26/38 [00:17<00:07,  1.51it/s][A
+Batch processing:  71%|███████   | 27/38 [00:17<00:07,  1.50it/s][A
+Batch processing:  74%|███████▎  | 28/38 [00:18<00:06,  1.50it/s][A
+Batch processing:  76%|███████▋  | 29/38 [00:19<00:05,  1.51it/s][A
+Batch processing:  79%|███████▉  | 30/38 [00:19<00:05,  1.50it/s][A
+Batch processing:  82%|████████▏ | 31/38 [00:20<00:04,  1.50it/s][A
+Batch processing:  84%|████████▍ | 32/38 [00:21<00:03,  1.51it/s][A
+Batch processing:  87%|████████▋ | 33/38 [00:21<00:03,  1.51it/s][A
+Batch processing:  89%|████████▉ | 34/38 [00:22<00:02,  1.51it/s][A
+Batch processing:  92%|█████████▏| 35/38 [00:23<00:01,  1.51it/s][A
+Batch processing:  95%|█████████▍| 36/38 [00:23<00:01,  1.51it/s][A
+Batch processing:  97%|█████████▋| 37/38 [00:24<00:00,  1.51it/s][A
+Batch processing: 100%|██████████| 38/38 [00:25<00:00,  1.56it/s][A
+                                                                 [AProcessing folders:   0%|          | 9/3216 [03:25<23:58:59, 26.92s/it]                                                                       Processing folders:   0%|          | 9/3216 [03:25<23:58:59, 26.92s/it]Processing A100P5: 10 files
+
+Batch processing:   0%|          | 0/37 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/37 [00:00<00:23,  1.52it/s][A
+Batch processing:   5%|▌         | 2/37 [00:01<00:23,  1.51it/s][A
+Batch processing:   8%|▊         | 3/37 [00:01<00:22,  1.51it/s][A
+Batch processing:  11%|█         | 4/37 [00:02<00:21,  1.51it/s][A
+Batch processing:  14%|█▎        | 5/37 [00:03<00:21,  1.51it/s][A
+Batch processing:  16%|█▌        | 6/37 [00:03<00:20,  1.51it/s][A
+Batch processing:  19%|█▉        | 7/37 [00:04<00:19,  1.52it/s][A
+Batch processing:  22%|██▏       | 8/37 [00:05<00:19,  1.52it/s][A
+Batch processing:  24%|██▍       | 9/37 [00:05<00:18,  1.52it/s][A
+Batch processing:  27%|██▋       | 10/37 [00:06<00:17,  1.51it/s][A
+Batch processing:  30%|██▉       | 11/37 [00:07<00:17,  1.51it/s][A
+Batch processing:  32%|███▏      | 12/37 [00:07<00:16,  1.51it/s][A
+Batch processing:  35%|███▌      | 13/37 [00:08<00:15,  1.50it/s][A
+Batch processing:  38%|███▊      | 14/37 [00:09<00:15,  1.50it/s][A
+Batch processing:  41%|████      | 15/37 [00:09<00:14,  1.51it/s][A
+Batch processing:  43%|████▎     | 16/37 [00:10<00:13,  1.51it/s][A
+Batch processing:  46%|████▌     | 17/37 [00:11<00:13,  1.50it/s][A
+Batch processing:  49%|████▊     | 18/37 [00:11<00:12,  1.51it/s][A
+Batch processing:  51%|█████▏    | 19/37 [00:12<00:11,  1.51it/s][A
+Batch processing:  54%|█████▍    | 20/37 [00:13<00:11,  1.50it/s][A
+Batch processing:  57%|█████▋    | 21/37 [00:13<00:10,  1.50it/s][A
+Batch processing:  59%|█████▉    | 22/37 [00:14<00:09,  1.50it/s][A
+Batch processing:  62%|██████▏   | 23/37 [00:15<00:09,  1.51it/s][A
+Batch processing:  65%|██████▍   | 24/37 [00:15<00:08,  1.50it/s][A
+Batch processing:  68%|██████▊   | 25/37 [00:16<00:07,  1.50it/s][A
+Batch processing:  70%|███████   | 26/37 [00:17<00:07,  1.50it/s][A
+Batch processing:  73%|███████▎  | 27/37 [00:17<00:06,  1.50it/s][A
+Batch processing:  76%|███████▌  | 28/37 [00:18<00:06,  1.50it/s][A
+Batch processing:  78%|███████▊  | 29/37 [00:19<00:05,  1.50it/s][A
+Batch processing:  81%|████████  | 30/37 [00:19<00:04,  1.50it/s][A
+Batch processing:  84%|████████▍ | 31/37 [00:20<00:04,  1.50it/s][A
+Batch processing:  86%|████████▋ | 32/37 [00:21<00:03,  1.50it/s][A
+Batch processing:  89%|████████▉ | 33/37 [00:21<00:02,  1.50it/s][A
+Batch processing:  92%|█████████▏| 34/37 [00:22<00:01,  1.50it/s][A
+Batch processing:  95%|█████████▍| 35/37 [00:23<00:01,  1.51it/s][A
+Batch processing:  97%|█████████▋| 36/37 [00:23<00:00,  1.51it/s][A
+Batch processing: 100%|██████████| 37/37 [00:24<00:00,  1.80it/s][A
+                                                                 [AProcessing folders:   0%|          | 10/3216 [03:53<24:23:40, 27.39s/it]                                                                        Processing folders:   0%|          | 10/3216 [03:53<24:23:40, 27.39s/it]Processing A100P6: 10 files
+
+Batch processing:   0%|          | 0/38 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/38 [00:00<00:24,  1.51it/s][A
+Batch processing:   5%|▌         | 2/38 [00:01<00:23,  1.52it/s][A
+Batch processing:   8%|▊         | 3/38 [00:01<00:23,  1.51it/s][A
+Batch processing:  11%|█         | 4/38 [00:02<00:22,  1.51it/s][A
+Batch processing:  13%|█▎        | 5/38 [00:03<00:21,  1.52it/s][A
+Batch processing:  16%|█▌        | 6/38 [00:03<00:21,  1.52it/s][A
+Batch processing:  18%|█▊        | 7/38 [00:04<00:20,  1.51it/s][A
+Batch processing:  21%|██        | 8/38 [00:05<00:19,  1.51it/s][A
+Batch processing:  24%|██▎       | 9/38 [00:05<00:19,  1.51it/s][A
+Batch processing:  26%|██▋       | 10/38 [00:06<00:18,  1.51it/s][A
+Batch processing:  29%|██▉       | 11/38 [00:07<00:17,  1.51it/s][A
+Batch processing:  32%|███▏      | 12/38 [00:07<00:17,  1.51it/s][A
+Batch processing:  34%|███▍      | 13/38 [00:08<00:16,  1.51it/s][A
+Batch processing:  37%|███▋      | 14/38 [00:09<00:15,  1.50it/s][A
+Batch processing:  39%|███▉      | 15/38 [00:09<00:15,  1.51it/s][A
+Batch processing:  42%|████▏     | 16/38 [00:10<00:14,  1.51it/s][A
+Batch processing:  45%|████▍     | 17/38 [00:11<00:13,  1.51it/s][A
+Batch processing:  47%|████▋     | 18/38 [00:11<00:13,  1.51it/s][A
+Batch processing:  50%|█████     | 19/38 [00:12<00:12,  1.51it/s][A
+Batch processing:  53%|█████▎    | 20/38 [00:13<00:11,  1.51it/s][A
+Batch processing:  55%|█████▌    | 21/38 [00:13<00:11,  1.51it/s][A
+Batch processing:  58%|█████▊    | 22/38 [00:14<00:10,  1.51it/s][A
+Batch processing:  61%|██████    | 23/38 [00:15<00:09,  1.51it/s][A
+Batch processing:  63%|██████▎   | 24/38 [00:15<00:09,  1.51it/s][A
+Batch processing:  66%|██████▌   | 25/38 [00:16<00:08,  1.51it/s][A
+Batch processing:  68%|██████▊   | 26/38 [00:17<00:07,  1.51it/s][A
+Batch processing:  71%|███████   | 27/38 [00:17<00:07,  1.51it/s][A
+Batch processing:  74%|███████▎  | 28/38 [00:18<00:06,  1.51it/s][A
+Batch processing:  76%|███████▋  | 29/38 [00:19<00:05,  1.51it/s][A
+Batch processing:  79%|███████▉  | 30/38 [00:19<00:05,  1.51it/s][A
+Batch processing:  82%|████████▏ | 31/38 [00:20<00:04,  1.51it/s][A
+Batch processing:  84%|████████▍ | 32/38 [00:21<00:03,  1.51it/s][A
+Batch processing:  87%|████████▋ | 33/38 [00:21<00:03,  1.50it/s][A
+Batch processing:  89%|████████▉ | 34/38 [00:22<00:02,  1.51it/s][A
+Batch processing:  92%|█████████▏| 35/38 [00:23<00:01,  1.51it/s][A
+Batch processing:  95%|█████████▍| 36/38 [00:23<00:01,  1.51it/s][A
+Batch processing:  97%|█████████▋| 37/38 [00:24<00:00,  1.51it/s][A
+Batch processing: 100%|██████████| 38/38 [00:24<00:00,  1.70it/s][A
+                                                                 [AProcessing folders:   0%|          | 11/3216 [04:23<24:55:14, 27.99s/it]                                                                        Processing folders:   0%|          | 11/3216 [04:23<24:55:14, 27.99s/it]Processing A100P7: 10 files
+
+Batch processing:   0%|          | 0/45 [00:00<?, ?it/s][A
+Batch processing:   2%|▏         | 1/45 [00:00<00:29,  1.51it/s][A
+Batch processing:   4%|▍         | 2/45 [00:01<00:28,  1.51it/s][A
+Batch processing:   7%|▋         | 3/45 [00:01<00:27,  1.51it/s][A
+Batch processing:   9%|▉         | 4/45 [00:02<00:27,  1.51it/s][A
+Batch processing:  11%|█         | 5/45 [00:03<00:26,  1.51it/s][A
+Batch processing:  13%|█▎        | 6/45 [00:03<00:25,  1.51it/s][A
+Batch processing:  16%|█▌        | 7/45 [00:04<00:25,  1.51it/s][A
+Batch processing:  18%|█▊        | 8/45 [00:05<00:24,  1.51it/s][A
+Batch processing:  20%|██        | 9/45 [00:05<00:23,  1.51it/s][A
+Batch processing:  22%|██▏       | 10/45 [00:06<00:23,  1.51it/s][A
+Batch processing:  24%|██▍       | 11/45 [00:07<00:22,  1.51it/s][A
+Batch processing:  27%|██▋       | 12/45 [00:07<00:21,  1.51it/s][A
+Batch processing:  29%|██▉       | 13/45 [00:08<00:21,  1.51it/s][A
+Batch processing:  31%|███       | 14/45 [00:09<00:20,  1.51it/s][A
+Batch processing:  33%|███▎      | 15/45 [00:09<00:19,  1.51it/s][A
+Batch processing:  36%|███▌      | 16/45 [00:10<00:19,  1.51it/s][A
+Batch processing:  38%|███▊      | 17/45 [00:11<00:18,  1.51it/s][A
+Batch processing:  40%|████      | 18/45 [00:11<00:17,  1.50it/s][A
+Batch processing:  42%|████▏     | 19/45 [00:12<00:17,  1.50it/s][A
+Batch processing:  44%|████▍     | 20/45 [00:13<00:16,  1.50it/s][A
+Batch processing:  47%|████▋     | 21/45 [00:13<00:15,  1.51it/s][A
+Batch processing:  49%|████▉     | 22/45 [00:14<00:15,  1.51it/s][A
+Batch processing:  51%|█████     | 23/45 [00:15<00:14,  1.50it/s][A
+Batch processing:  53%|█████▎    | 24/45 [00:15<00:13,  1.50it/s][A
+Batch processing:  56%|█████▌    | 25/45 [00:16<00:13,  1.51it/s][A
+Batch processing:  58%|█████▊    | 26/45 [00:17<00:12,  1.51it/s][A
+Batch processing:  60%|██████    | 27/45 [00:17<00:11,  1.51it/s][A
+Batch processing:  62%|██████▏   | 28/45 [00:18<00:11,  1.51it/s][A
+Batch processing:  64%|██████▍   | 29/45 [00:19<00:10,  1.51it/s][A
+Batch processing:  67%|██████▋   | 30/45 [00:19<00:09,  1.51it/s][A
+Batch processing:  69%|██████▉   | 31/45 [00:20<00:09,  1.51it/s][A
+Batch processing:  71%|███████   | 32/45 [00:21<00:08,  1.51it/s][A
+Batch processing:  73%|███████▎  | 33/45 [00:21<00:07,  1.51it/s][A
+Batch processing:  76%|███████▌  | 34/45 [00:22<00:07,  1.50it/s][A
+Batch processing:  78%|███████▊  | 35/45 [00:23<00:06,  1.51it/s][A
+Batch processing:  80%|████████  | 36/45 [00:23<00:05,  1.50it/s][A
+Batch processing:  82%|████████▏ | 37/45 [00:24<00:05,  1.51it/s][A
+Batch processing:  84%|████████▍ | 38/45 [00:25<00:04,  1.50it/s][A
+Batch processing:  87%|████████▋ | 39/45 [00:25<00:03,  1.51it/s][A
+Batch processing:  89%|████████▉ | 40/45 [00:26<00:03,  1.51it/s][A
+Batch processing:  91%|█████████ | 41/45 [00:27<00:02,  1.51it/s][A
+Batch processing:  93%|█████████▎| 42/45 [00:27<00:01,  1.51it/s][A
+Batch processing:  96%|█████████▌| 43/45 [00:28<00:01,  1.50it/s][A
+Batch processing:  98%|█████████▊| 44/45 [00:29<00:00,  1.51it/s][A
+Batch processing: 100%|██████████| 45/45 [00:29<00:00,  1.62it/s][A
+                                                                 [AProcessing folders:   0%|          | 12/3216 [04:59<27:02:31, 30.38s/it]                                                                        Processing folders:   0%|          | 12/3216 [04:59<27:02:31, 30.38s/it]Processing A101P1: 10 files
+
+Batch processing:   0%|          | 0/44 [00:00<?, ?it/s][A
+Batch processing:   2%|▏         | 1/44 [00:00<00:28,  1.51it/s][A
+Batch processing:   5%|▍         | 2/44 [00:01<00:27,  1.51it/s][A
+Batch processing:   7%|▋         | 3/44 [00:01<00:26,  1.52it/s][A
+Batch processing:   9%|▉         | 4/44 [00:02<00:26,  1.52it/s][A
+Batch processing:  11%|█▏        | 5/44 [00:03<00:25,  1.51it/s][A
+Batch processing:  14%|█▎        | 6/44 [00:03<00:25,  1.51it/s][A
+Batch processing:  16%|█▌        | 7/44 [00:04<00:24,  1.51it/s][A
+Batch processing:  18%|█▊        | 8/44 [00:05<00:23,  1.51it/s][A
+Batch processing:  20%|██        | 9/44 [00:05<00:23,  1.51it/s][A
+Batch processing:  23%|██▎       | 10/44 [00:06<00:22,  1.51it/s][A
+Batch processing:  25%|██▌       | 11/44 [00:07<00:21,  1.51it/s][A
+Batch processing:  27%|██▋       | 12/44 [00:07<00:21,  1.51it/s][A
+Batch processing:  30%|██▉       | 13/44 [00:08<00:20,  1.51it/s][A
+Batch processing:  32%|███▏      | 14/44 [00:09<00:19,  1.51it/s][A
+Batch processing:  34%|███▍      | 15/44 [00:09<00:19,  1.51it/s][A
+Batch processing:  36%|███▋      | 16/44 [00:10<00:18,  1.51it/s][A
+Batch processing:  39%|███▊      | 17/44 [00:11<00:17,  1.51it/s][A
+Batch processing:  41%|████      | 18/44 [00:11<00:17,  1.50it/s][A
+Batch processing:  43%|████▎     | 19/44 [00:12<00:16,  1.50it/s][A
+Batch processing:  45%|████▌     | 20/44 [00:13<00:15,  1.50it/s][A
+Batch processing:  48%|████▊     | 21/44 [00:13<00:15,  1.50it/s][A
+Batch processing:  50%|█████     | 22/44 [00:14<00:14,  1.50it/s][A
+Batch processing:  52%|█████▏    | 23/44 [00:15<00:13,  1.50it/s][A
+Batch processing:  55%|█████▍    | 24/44 [00:15<00:13,  1.50it/s][A
+Batch processing:  57%|█████▋    | 25/44 [00:16<00:12,  1.50it/s][A
+Batch processing:  59%|█████▉    | 26/44 [00:17<00:11,  1.50it/s][A
+Batch processing:  61%|██████▏   | 27/44 [00:17<00:11,  1.50it/s][A
+Batch processing:  64%|██████▎   | 28/44 [00:18<00:10,  1.51it/s][A
+Batch processing:  66%|██████▌   | 29/44 [00:19<00:09,  1.51it/s][A
+Batch processing:  68%|██████▊   | 30/44 [00:19<00:09,  1.51it/s][A
+Batch processing:  70%|███████   | 31/44 [00:20<00:08,  1.51it/s][A
+Batch processing:  73%|███████▎  | 32/44 [00:21<00:07,  1.51it/s][A
+Batch processing:  75%|███████▌  | 33/44 [00:21<00:07,  1.51it/s][A
+Batch processing:  77%|███████▋  | 34/44 [00:22<00:06,  1.51it/s][A
+Batch processing:  80%|███████▉  | 35/44 [00:23<00:05,  1.51it/s][A
+Batch processing:  82%|████████▏ | 36/44 [00:23<00:05,  1.50it/s][A
+Batch processing:  84%|████████▍ | 37/44 [00:24<00:04,  1.51it/s][A
+Batch processing:  86%|████████▋ | 38/44 [00:25<00:03,  1.51it/s][A
+Batch processing:  89%|████████▊ | 39/44 [00:25<00:03,  1.51it/s][A
+Batch processing:  91%|█████████ | 40/44 [00:26<00:02,  1.51it/s][A
+Batch processing:  93%|█████████▎| 41/44 [00:27<00:01,  1.51it/s][A
+Batch processing:  95%|█████████▌| 42/44 [00:27<00:01,  1.51it/s][A
+Batch processing:  98%|█████████▊| 43/44 [00:28<00:00,  1.51it/s][A
+Batch processing: 100%|██████████| 44/44 [00:28<00:00,  1.97it/s][A
+                                                                 [AProcessing folders:   0%|          | 13/3216 [05:32<27:52:13, 31.32s/it]                                                                        Processing folders:   0%|          | 13/3216 [05:32<27:52:13, 31.32s/it]Processing A101P10: 10 files
+
+Batch processing:   0%|          | 0/37 [00:00<?, ?it/s][A
+Batch processing:   3%|▎         | 1/37 [00:00<00:23,  1.51it/s][A
+Batch processing:   5%|▌         | 2/37 [00:01<00:23,  1.51it/s][A
+Batch processing:   8%|▊         | 3/37 [00:01<00:22,  1.51it/s][A
+Batch processing:  11%|█         | 4/37 [00:02<00:21,  1.51it/s][A
+Batch processing:  14%|█▎        | 5/37 [00:03<00:21,  1.51it/s][A
+Batch processing:  16%|█▌        | 6/37 [00:03<00:20,  1.51it/s][A
+Batch processing:  19%|█▉        | 7/37 [00:04<00:19,  1.51it/s][A
+Batch processing:  22%|██▏       | 8/37 [00:05<00:19,  1.51it/s][A
+Batch processing:  24%|██▍       | 9/37 [00:05<00:18,  1.51it/s][A
+Batch processing:  27%|██▋       | 10/37 [00:06<00:17,  1.51it/s][A
+Batch processing:  30%|██▉       | 11/37 [00:07<00:17,  1.51it/s][A
+Batch processing:  32%|███▏      | 12/37 [00:07<00:16,  1.51it/s][A
+Batch processing:  35%|███▌      | 13/37 [00:08<00:15,  1.51it/s][A
+Batch processing:  38%|███▊      | 14/37 [00:09<00:15,  1.51it/s][A
+Batch processing:  41%|████      | 15/37 [00:09<00:14,  1.51it/s][A
+Batch processing:  43%|████▎     | 16/37 [00:10<00:13,  1.51it/s][A
+Batch processing:  46%|████▌     | 17/37 [00:11<00:13,  1.51it/s][A
+Batch processing:  49%|████▊     | 18/37 [00:11<00:12,  1.52it/s][A
+Batch processing:  51%|█████▏    | 19/37 [00:12<00:11,  1.52it/s][A
+Batch processing:  54%|█████▍    | 20/37 [00:13<00:11,  1.52it/s][A
+Batch processing:  57%|█████▋    | 21/37 [00:13<00:10,  1.51it/s][A
+Batch processing:  59%|█████▉    | 22/37 [00:14<00:09,  1.51it/s][A
+Batch processing:  62%|██████▏   | 23/37 [00:15<00:09,  1.51it/s][A
+Batch processing:  65%|██████▍   | 24/37 [00:15<00:08,  1.51it/s][A
+Batch processing:  68%|██████▊   | 25/37 [00:16<00:07,  1.51it/s][A
+Batch processing:  70%|███████   | 26/37 [00:17<00:07,  1.51it/s][A
+Batch processing:  73%|███████▎  | 27/37 [00:17<00:06,  1.51it/s][A
+Batch processing:  76%|███████▌  | 28/37 [00:18<00:05,  1.50it/s][A
+Batch processing:  78%|███████▊  | 29/37 [00:19<00:05,  1.50it/s][A
+Batch processing:  81%|████████  | 30/37 [00:19<00:04,  1.50it/s][A
+Batch processing:  84%|████████▍ | 31/37 [00:20<00:03,  1.50it/s][A
+Batch processing:  86%|████████▋ | 32/37 [00:21<00:03,  1.50it/s][A
+Batch processing:  89%|████████▉ | 33/37 [00:21<00:02,  1.50it/s][A
+Batch processing:  92%|█████████▏| 34/37 [00:22<00:01,  1.50it/s][A
+Batch processing:  95%|█████████▍| 35/37 [00:23<00:01,  1.50it/s][A
+Batch processing:  97%|█████████▋| 36/37 [00:23<00:00,  1.50it/s][A
+Batch processing: 100%|██████████| 37/37 [00:24<00:00,  1.59it/s][A
+                                                                 [AProcessing folders:   0%|          | 13/3216 [05:59<24:35:06, 27.63s/it]
+Error executing job with overrides: []
+Traceback (most recent call last):
+  File "/home/huong.nguyenthi2/SLR_PROJECT/src/preprocessing/optical_flow.py", line 106, in main
+    process_files_batch(npy_files, raft, optical_flow_dirs, batch_size=16, log_file=log_file)
+  File "/home/huong.nguyenthi2/SLR_PROJECT/src/preprocessing/optical_flow.py", line 53, in process_files_batch
+    with open(log_file, 'a') as f:
+         ^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/huong.nguyenthi2/SLR_PROJECT/src/outputs/2025-08-30/13-01-16/optical_flow.log'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

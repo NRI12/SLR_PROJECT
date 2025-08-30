@@ -1,0 +1,8 @@
+pandas
+hydra-core
+numpy
+omegaconf
+scikit-learn
+opencv-python
+tqdm
+gdown
