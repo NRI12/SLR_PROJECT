@@ -49,13 +49,11 @@ def process_files_batch(file_list, raft, optical_flow_dirs, batch_size=8, log_fi
                 results[file_idx] = {}
             results[file_idx][frame_idx] = flows[j].permute(1, 2, 0).cpu().numpy()
     
-    # Save results
     with open(log_file, 'a') as f:
         for file_idx, frame_flows in results.items():
             if not frame_flows:
                 continue
                 
-            # Sort by frame index and convert to array
             sorted_flows = [frame_flows[i] for i in sorted(frame_flows.keys())]
             
             npy_file = file_list[file_idx]

@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 from omegaconf import OmegaConf
-from SLR_PROJECT.src.models.HRNET import get_pose_net
+from src.models.architectures.hrnet import get_pose_net
 import cv2
 from torchvision import transforms
 import os
@@ -12,8 +12,10 @@ import glob
 import hydra
 from omegaconf import DictConfig
 from datetime import datetime
+
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 def clean_state_dict(state_dict):
