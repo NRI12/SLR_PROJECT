@@ -1,4 +1,6 @@
-data/
+/data/
 src/checkpoint/
 __pycache__/
 .ipynb_checkpoints/
+src/outputs
+*.log
