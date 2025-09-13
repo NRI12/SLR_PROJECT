@@ -4,8 +4,8 @@ from torch.utils.data import Dataset
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from typing import Dict, Optional, List, Tuple, Union
-from .utils import load_multimodal_data,temporal_subsample
+from typing import Dict, Optional, List
+from .utils import load_multimodal_data
 from .transforms import VideoTransforms
 
 class MultimodalSLRDataset(Dataset):

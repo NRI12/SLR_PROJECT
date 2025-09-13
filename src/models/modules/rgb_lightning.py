@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import pytorch_lightning as pl
 from torchmetrics import Accuracy
-from models.architectures.r2plus1d import R2Plus1DModel
+from src.models.architectures.r2plus1d import R2Plus1DModel
 
 class RGBLightningModule(pl.LightningModule):
     def __init__(self, num_classes=100, learning_rate=1e-3, weight_decay=1e-4, 

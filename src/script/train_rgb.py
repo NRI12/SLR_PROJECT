@@ -1,23 +1,24 @@
 import os
 import wandb
 import hydra
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from src.data.datamodules import SLRDataModule
 from src.models.modules.rgb_lightning import RGBLightningModule
 
-@hydra.main(version_base=None, config_path="../configs/model", config_name="rgb")
+@hydra.main(version_base=None, config_path="../../configs", config_name="model/rgb")
 def train(cfg: DictConfig):
     os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.gpu_id)
+    
     
     pl.seed_everything(42)
     wandb.login()
     
     datamodule = SLRDataModule(
-        annotation_file=cfg.data.annotation_file,
-        data_root=cfg.data.data_root,
+        annotation_file=cfg.datamodule.annotation_file,
+        data_root=cfg.datamodule.data_root,
         modalities=['rgb'],
         batch_size=cfg.training.batch_size,
         video_size=(cfg.training.video_size, cfg.training.video_size),

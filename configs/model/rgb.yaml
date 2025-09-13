@@ -1,10 +1,11 @@
 defaults:
+  - _self_
   - /data: dataset
 
 _target_: src.models.rgb_lightning.RGBLightningModule
 name: r2plus1d_rgb
 
-data:
+datamodule: 
   annotation_file: /home/huong.nguyenthi2/SLR_PROJECT/data/annotation/dataset.csv
   data_root: /home/huong.nguyenthi2/SLR_PROJECT/data/processed
 

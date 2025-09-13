@@ -30,7 +30,7 @@ echo "WANDB_PROJECT: $WANDB_PROJECT"
 echo "=================================="
 
 echo "Starting Training..."
-python src/script/train_rgb.py
+python -m src.script.train_rgb
 exit_code=$?
 
 echo "=================================="
