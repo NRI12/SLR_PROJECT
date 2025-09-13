@@ -1,0 +1,18 @@
+num_classes: 272
+learning_rate: 0.001
+weight_decay: 0.0001
+num_test_clips: 5
+target_frames: 16
+annotation_file: /home/huong.nguyenthi2/SLR_PROJECT/data/annotation/dataset.csv
+data_root: /home/huong.nguyenthi2/SLR_PROJECT/data/processed
+modalities:
+- rgb
+batch_size: 8
+num_workers: 4
+pin_memory: true
+target_fps: null
+video_size:
+- 112
+- 112
+output_format: CTHW
+augmentation_config: null

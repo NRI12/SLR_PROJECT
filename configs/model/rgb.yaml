@@ -2,29 +2,26 @@ defaults:
   - _self_
   - /data: dataset
 
-_target_: src.models.rgb_lightning.RGBLightningModule
-name: r2plus1d_rgb
+gpu_id: 0
 
 datamodule: 
   annotation_file: /home/huong.nguyenthi2/SLR_PROJECT/data/annotation/dataset.csv
   data_root: /home/huong.nguyenthi2/SLR_PROJECT/data/processed
 
 training:
-  experiment_name: baseline_multiclip
+  experiment_name: uniform_clips
   batch_size: 8
-  target_frames: 16
-  video_size: 112
+  target_frames: 16        
+  num_test_clips: 5        
+  video_size: 112        
   num_workers: 4
   learning_rate: 1e-3
   weight_decay: 1e-4
   max_epochs: 100
   patience: 15
   val_check_interval: 0.5
-  num_test_clips: 5
   checkpoint_dir: /home/huong.nguyenthi2/SLR_PROJECT/checkpoints/rgb
 
 logging:
   wandb_project: slr-rgb-training
   log_every_n_steps: 20
-
-gpu_id: 1

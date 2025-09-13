@@ -36,46 +36,12 @@ def train(cfg: DictConfig):
         target_frames=cfg.model.training.target_frames
     )
     
-    wandb_logger = WandbLogger(
-        project=cfg.model.logging.wandb_project,
-        name=f"r2plus1d-{cfg.model.training.experiment_name}",
-        log_model=True,
-        tags=["rgb", "r2plus1d"]
-    )
+    print(f"Number of samples in train set: {len(datamodule.train_dataloader().dataset)}")
+    sample = datamodule.train_dataloader().dataset[0]
+    print(f"Sample keys: {list(sample.keys())}")
+    print(f"Sample info: {{k: type(v) for k, v in sample.items()}}")
+    print(f"Sample shape: {sample['rgb'].shape}")
+    print(f"Sample label: {sample['sign_id']}")
     
-    checkpoint_callback = ModelCheckpoint(
-        dirpath=cfg.model.training.checkpoint_dir,
-        filename='r2plus1d-{epoch:02d}-{val_acc:.4f}',
-        monitor='val_acc',
-        mode='max',
-        save_top_k=3,
-        save_last=True,
-        verbose=True
-    )
-    
-    early_stopping = EarlyStopping(
-        monitor='val_acc',
-        mode='max',
-        patience=cfg.model.training.patience,
-        verbose=True
-    )
-    
-    trainer = pl.Trainer(
-        max_epochs=cfg.model.training.max_epochs,
-        accelerator='cpu' if not torch.cuda.is_available() else 'gpu',
-        devices=1,
-        # logger=wandb_logger,
-        callbacks=[checkpoint_callback, early_stopping],
-        log_every_n_steps=cfg.model.logging.log_every_n_steps,
-        val_check_interval=cfg.model.training.val_check_interval,
-        precision=16,
-        gradient_clip_val=1.0
-    )
-    
-    trainer.fit(model, datamodule)
-    trainer.test(model, datamodule, ckpt_path='best')
-    
-    wandb.finish()
-
 if __name__ == "__main__":
     train()

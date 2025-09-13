@@ -14,7 +14,8 @@ class MultimodalSLRDataset(Dataset):
                  data_root: str,
                  split: str = 'train',
                  modalities: List[str] = ['rgb', 'keypoint', 'heatmap', 'optical_flow'],
-                 max_frames: int = None,
+                 target_frames: int = 16,
+                 num_clips: int = 1,
                  video_transforms: Optional[VideoTransforms] = None,
                  target_fps: Optional[int] = None,
                  output_format: str = 'CTHW'):
@@ -22,8 +23,9 @@ class MultimodalSLRDataset(Dataset):
         self.data_root = Path(data_root)
         self.split = split
         self.modalities = modalities
-        self.max_frames = max_frames
+        self.target_frames = target_frames
         self.target_fps = target_fps
+        self.num_clips = num_clips if split != 'train' else 1
         self.output_format = output_format
 
         self.df = pd.read_csv(annotation_file)
@@ -38,9 +40,20 @@ class MultimodalSLRDataset(Dataset):
             self.video_transforms.training = (split == 'train')
     
     def __len__(self) -> int:
-        return len(self.df)
+        if self.split == 'train':
+            return len(self.df)
+        else:
+            return len(self.df) * self.num_clips
+    
     def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
-        row = self.df.iloc[idx]
+        if self.split == 'train':
+            video_idx = idx
+            clip_idx = 0  
+        else:
+            video_idx = idx // self.num_clips
+            clip_idx = idx % self.num_clips
+        
+        row = self.df.iloc[video_idx]
         video_path = row['video_path']
         sign_id = row['sign_id']
         person_id = row['person_id']
@@ -50,48 +63,55 @@ class MultimodalSLRDataset(Dataset):
         base_path = self.data_root / folder_name
 
         data = load_multimodal_data(str(base_path), filename)
+        print(f"Loading idx={idx}, video_idx={video_idx}, clip_idx={clip_idx}")
 
         sample = {
             'sign_id': torch.tensor(self.class_to_idx[sign_id], dtype=torch.long),
             'person_id': torch.tensor(person_id, dtype=torch.long),
         }
-        if 'rgb' in self.modalities and 'rgb' in data:
-            rgb = torch.from_numpy(data['rgb'])
-         
-            if self.target_fps:
-                rgb = self._subsample_by_fps(rgb, self.target_fps)
-                
-            if self.video_transforms:
-                rgb = self.video_transforms(rgb)
-            sample['rgb'] = rgb
-
-        if 'keypoint' in self.modalities and 'keypoint' in data:
-            keypoints = torch.from_numpy(data['keypoint'].astype(np.float32))
-            if self.target_fps:
-                keypoints = self._subsample_by_fps(keypoints, self.target_fps)
-            sample['keypoint'] = keypoints
-
-        if 'heatmap' in self.modalities and 'heatmap' in data:
-            heatmaps = torch.from_numpy(data['heatmap'].astype(np.float32))
-            if self.target_fps:
-                heatmaps = self._subsample_by_fps(heatmaps, self.target_fps)
-            sample["heatmap"] = heatmaps
+        for modality in self.modalities:
+            if modality not in data:
+                raise ValueError(f"Modality '{modality}' not found in data.")
             
-        if 'optical_flow' in self.modalities and 'optical_flow' in data:
-            flow = torch.from_numpy(data['optical_flow'].astype(np.float32))
-            if self.target_fps:
-                flow = self._subsample_by_fps(flow, self.target_fps)
-            sample["optical_flow"] = flow
+            if modality in ['rgb', 'optical_flow'] :
+                tensor_data = self._process_modality(data[modality], modality, clip_idx)
+                sample[modality] = tensor_data
         return sample
     
+    def _process_modality(self, data: np.ndarray, modality: str, clip_idx: int) -> torch.Tensor:
+
+        tensor_data = torch.from_numpy(data.astype(np.float32))
+        tensor_data = self._sample_clips(tensor_data, clip_idx)
+        
+  
+        if modality == 'rgb' and self.video_transforms:
+            tensor_data = self.video_transforms(tensor_data)
+            
+        return tensor_data    
+    def _sample_clips(self, data: torch.Tensor, clip_idx: int) -> torch.Tensor:
+        T = data.shape[0]
+        
+        # Nếu video ngắn hơn target_frames, repeat
+        if T < self.target_frames:
+            repeat_factor = (self.target_frames + T - 1) // T
+            data = data.repeat(repeat_factor, *([1] * (data.dim() - 1)))
+            T = data.shape[0]
+        
+        if self.split == 'train':
+            # Training: random crop
+            if T == self.target_frames:
+                return data
+            start = torch.randint(0, T - self.target_frames + 1, (1,)).item()
+            return data[start:start + self.target_frames]
+        
+        else:
+            # Val/Test: uniform sampling
+            segment_length = T // self.num_clips
+            start = clip_idx * segment_length
+            
+            if start + self.target_frames > T:
+                start = T - self.target_frames
+                
+            return data[start:start + self.target_frames]    
     def _extract_folder_name(self, video_path: str) -> str:
         return Path(video_path).parts[0]
-
-    def _subsample_by_fps(self, data: torch.Tensor, target_fps: int) -> torch.Tensor:
-        current_frames = data.shape[0]
-        if current_frames <= target_fps:
-            return data
-        
-        indices = torch.linspace(0, current_frames - 1, target_fps).long()
-        return data[indices]    
-

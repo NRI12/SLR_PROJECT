@@ -19,85 +19,81 @@ class RGBLightningModule(pl.LightningModule):
         self.val_acc = Accuracy(task="multiclass", num_classes=num_classes)
         self.test_acc = Accuracy(task="multiclass", num_classes=num_classes)
         
+        self.val_predictions = []
+        self.val_targets = []
+        self.test_predictions = []
+        self.test_targets = []
+
     def forward(self, x):
         return self.model(x)
     
     def training_step(self, batch, batch_idx):
         x, y = batch['rgb'], batch['sign_id']
-        x = self._random_temporal_crop(x, self.target_frames)
         logits = self(x)
         loss = self.criterion(logits, y)
-        
         self.train_acc(logits, y)
         self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
         self.log('train_acc', self.train_acc, on_step=True, on_epoch=True, prog_bar=True)
-        
         return loss
     
     def validation_step(self, batch, batch_idx):
         x, y = batch['rgb'], batch['sign_id']
-        logits = self._multi_clip_inference(x, self.target_frames)
+        logits = self(x)
         loss = self.criterion(logits, y)
-        
-        self.val_acc(logits, y)
+        self.val_predictions.append(logits)
+        self.val_targets.append(y)    
         self.log('val_loss', loss, on_epoch=True, prog_bar=True)
-        self.log('val_acc', self.val_acc, on_epoch=True, prog_bar=True)
-        
         return loss
     
     def test_step(self, batch, batch_idx):
         x, y = batch['rgb'], batch['sign_id']
-        logits = self._multi_clip_inference(x, self.target_frames)
+        logits = self(x)
         loss = self.criterion(logits, y)
-        
-        self.test_acc(logits, y)
+        self.test_predictions.append(logits)
+        self.test_targets.append(y)
         self.log('test_loss', loss, on_epoch=True)
-        self.log('test_acc', self.test_acc, on_epoch=True)
-        
         return logits
     
-    def _random_temporal_crop(self, x, target_frames):
-        B, C, T, H, W = x.shape
-        if T < target_frames:
-            repeat_factor = (target_frames + T - 1) // T
-            x = x.repeat(1, 1, repeat_factor, 1, 1)
-            T = x.shape[2]
+    def on_validation_epoch_end(self):
+        if not self.val_predictions:
+            return
+        all_logits = torch.cat(self.val_predictions, dim=0)
+        all_targets = torch.cat(self.val_targets, dim=0)
+        import pdb; pdb.set_trace()
+
+        num_videos = len(all_logits) // self.num_test_clips
+        grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)  # [N, clips, classes]
+        grouped_targets = all_targets.view(num_videos, self.num_test_clips)    # [N, clips]
         
-        start = torch.randint(0, T - target_frames + 1, (1,)).item()
-        return x[:, :, start:start+target_frames, :, :]
-    
-    def _multi_clip_inference(self, x, target_frames):
-        B, C, T, H, W = x.shape
+        # Average predictions across clips
+        avg_logits = grouped_logits.mean(dim=1)  # [N, classes]
+        video_targets = grouped_targets[:, 0]    # [N] - same labels
         
-        if T < target_frames:
-            repeat_factor = (target_frames + T - 1) // T
-            x = x.repeat(1, 1, repeat_factor, 1, 1)
-            T = x.shape[2]
+        self.val_acc(avg_logits, video_targets)
+        self.log('val_acc', self.val_acc, on_epoch=True, prog_bar=True)
         
-        if T <= target_frames:
-            return self(x[:, :, :target_frames, :, :])
+        self.val_predictions.clear()
+        self.val_targets.clear()
+
+    def on_test_epoch_end(self):
+        if not self.test_predictions:
+            return
+            
+        all_logits = torch.cat(self.test_predictions, dim=0)
+        all_targets = torch.cat(self.test_targets, dim=0)
         
-        clip_logits = []
-        if T <= target_frames * self.num_test_clips:
-            step = max(1, (T - target_frames) // (self.num_test_clips - 1))
-            for i in range(self.num_test_clips):
-                start = min(i * step, T - target_frames)
-                clip = x[:, :, start:start+target_frames, :, :]
-                logits = self(clip)
-                clip_logits.append(logits)
-        else:
-            step = T // self.num_test_clips
-            for i in range(self.num_test_clips):
-                start = i * step
-                end = min(start + target_frames, T)
-                if end - start < target_frames:
-                    start = max(0, end - target_frames)
-                clip = x[:, :, start:start+target_frames, :, :]
-                logits = self(clip)
-                clip_logits.append(logits)
+        num_videos = len(all_logits) // self.num_test_clips
+        grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)
+        grouped_targets = all_targets.view(num_videos, self.num_test_clips)
         
-        return torch.stack(clip_logits).mean(dim=0)
-    
+        avg_logits = grouped_logits.mean(dim=1)
+        video_targets = grouped_targets[:, 0]
+        
+        self.test_acc(avg_logits, video_targets)
+        self.log('test_acc', self.test_acc, on_epoch=True)
+        
+        self.test_predictions.clear()
+        self.test_targets.clear()    
     def configure_optimizers(self):
         optimizer = torch.optim.AdamW(
             self.parameters(), 

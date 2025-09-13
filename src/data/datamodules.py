@@ -1,9 +1,7 @@
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from typing import Optional, List, Dict, Any, Tuple
-import torch
 from pathlib import Path
-
 from .datasets import MultimodalSLRDataset
 from .transforms import VideoTransforms
 
@@ -16,6 +14,8 @@ class SLRDataModule(pl.LightningDataModule):
         num_workers: int = 4,
         pin_memory: bool = True,
         target_fps: Optional[int] = None,
+        target_frames: int = 16,
+        num_test_clips: int = 5,
         video_size: Tuple[int, int] = (224, 224),
         output_format: str = 'CTHW',
         augmentation_config: Optional[Dict[str, Any]] = None):
@@ -29,6 +29,8 @@ class SLRDataModule(pl.LightningDataModule):
         self.num_workers = num_workers
         self.pin_memory = pin_memory
         self.target_fps = target_fps
+        self.target_frames = target_frames
+        self.num_test_clips = num_test_clips
         self.video_size = video_size
         self.output_format = output_format
         
@@ -54,6 +56,8 @@ class SLRDataModule(pl.LightningDataModule):
                 data_root=self.data_root,
                 split='train',
                 modalities=self.modalities,
+                target_frames=self.target_frames,
+                num_clips=1,
                 video_transforms=self._get_video_transforms(train=True),
                 target_fps=self.target_fps,
                 output_format=self.output_format
@@ -64,6 +68,8 @@ class SLRDataModule(pl.LightningDataModule):
                 data_root=self.data_root,
                 split='val',
                 modalities=self.modalities,
+                target_frames=self.target_frames,
+                num_clips=self.num_test_clips,
                 video_transforms=self._get_video_transforms(train=False),
                 target_fps=self.target_fps,
                 output_format=self.output_format
@@ -77,6 +83,8 @@ class SLRDataModule(pl.LightningDataModule):
                 data_root=self.data_root,
                 split='test',
                 modalities=self.modalities,
+                target_frames=self.target_frames,
+                num_clips=self.num_test_clips,
                 video_transforms=self._get_video_transforms(train=False),
                 target_fps=self.target_fps,
                 output_format=self.output_format
@@ -93,7 +101,6 @@ class SLRDataModule(pl.LightningDataModule):
             num_workers=self.num_workers,
             pin_memory=self.pin_memory,
             drop_last=True,
-            collate_fn=self._collate_fn
         )
     
     def val_dataloader(self) -> DataLoader:
@@ -104,7 +111,6 @@ class SLRDataModule(pl.LightningDataModule):
             num_workers=self.num_workers,
             pin_memory=self.pin_memory,
             drop_last=False,
-            collate_fn=self._collate_fn,
         )
 
     def test_dataloader(self) -> DataLoader:
@@ -115,7 +121,6 @@ class SLRDataModule(pl.LightningDataModule):
             num_workers=self.num_workers,
             pin_memory=self.pin_memory,
             drop_last=False,
-            collate_fn=self._collate_fn,
         )
     
     def _get_video_transforms(self, train: bool = True) -> Optional[VideoTransforms]:            
@@ -135,13 +140,3 @@ class SLRDataModule(pl.LightningDataModule):
                 color_jitter=False,
                 output_format=self.output_format
             )
-    
-    @staticmethod
-    def _collate_fn(batch: List[Dict[str, torch.Tensor]]) -> Dict[str, torch.Tensor]:
-        collated = {}
-        
-        for key in batch[0].keys():
-            collated[key] = torch.stack([item[key] for item in batch])
-        
-        return collated
-    
