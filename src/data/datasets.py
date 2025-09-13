@@ -14,10 +14,11 @@ class MultimodalSLRDataset(Dataset):
                  data_root: str,
                  split: str = 'train',
                  modalities: List[str] = ['rgb', 'keypoint', 'heatmap', 'optical_flow'],
-                 max_frames: int = 64,
+                 max_frames: int = None,
                  video_transforms: Optional[VideoTransforms] = None,
                  target_fps: Optional[int] = None,
                  output_format: str = 'CTHW'):
+        
         self.data_root = Path(data_root)
         self.split = split
         self.modalities = modalities
@@ -59,36 +60,30 @@ class MultimodalSLRDataset(Dataset):
          
             if self.target_fps:
                 rgb = self._subsample_by_fps(rgb, self.target_fps)
-            rgb = temporal_subsample(rgb.numpy(), self.max_frames)
-            rgb =torch.from_numpy(rgb)
-
+                
             if self.video_transforms:
                 rgb = self.video_transforms(rgb)
             sample['rgb'] = rgb
+
         if 'keypoint' in self.modalities and 'keypoint' in data:
             keypoints = torch.from_numpy(data['keypoint'].astype(np.float32))
             if self.target_fps:
                 keypoints = self._subsample_by_fps(keypoints, self.target_fps)
-            keypoints = temporal_subsample(keypoints.numpy(), self.max_frames)
-            keypoints = torch.from_numpy(keypoints)
             sample['keypoint'] = keypoints
 
         if 'heatmap' in self.modalities and 'heatmap' in data:
             heatmaps = torch.from_numpy(data['heatmap'].astype(np.float32))
             if self.target_fps:
                 heatmaps = self._subsample_by_fps(heatmaps, self.target_fps)
-            heatmaps = temporal_subsample(heatmaps.numpy(), self.max_frames)
-            heatmaps = torch.from_numpy(heatmaps)
             sample["heatmap"] = heatmaps
             
         if 'optical_flow' in self.modalities and 'optical_flow' in data:
             flow = torch.from_numpy(data['optical_flow'].astype(np.float32))
             if self.target_fps:
                 flow = self._subsample_by_fps(flow, self.target_fps)
-            flow = temporal_subsample(flow.numpy(), self.max_frames)
-            flow = torch.from_numpy(flow)
             sample["optical_flow"] = flow
         return sample
+    
     def _extract_folder_name(self, video_path: str) -> str:
         return Path(video_path).parts[0]
 
@@ -99,14 +94,4 @@ class MultimodalSLRDataset(Dataset):
         
         indices = torch.linspace(0, current_frames - 1, target_fps).long()
         return data[indices]    
-    def get_statistics(self) -> Dict[str, Union[int, float]]:
-        stats = {
-            'num_samples': len(self.df),
-            'num_classes': self.num_classes,
-            'num_persons': self.df['person_id'].nunique(),
-            'avg_samples_per_class': len(self.df) / self.num_classes,
-            'min_samples_per_class': self.df['sign_id'].value_counts().min(),
-            'max_samples_per_class': self.df['sign_id'].value_counts().max(),
-        }
-        return stats
-    
+

@@ -1,6 +1,5 @@
-
 import pytorch_lightning as pl
-from torch.utils.data import DataLoader, WeightedRandomSampler
+from torch.utils.data import DataLoader
 from typing import Optional, List, Dict, Any, Tuple
 import torch
 from pathlib import Path
@@ -8,19 +7,15 @@ from pathlib import Path
 from .datasets import MultimodalSLRDataset
 from .transforms import VideoTransforms
 
-
 class SLRDataModule(pl.LightningDataModule):
     def __init__(self,
         annotation_file: str,
         data_root: str,
-        modalities: List[str] = ['rgb', 'keypoint', 'heatmap', 'optical_flow'],
+        modalities: List[str] = ['rgb'],
         batch_size: int = 8,
         num_workers: int = 4,
         pin_memory: bool = True,
-        max_frames: int = 64,
         target_fps: Optional[int] = None,
-        use_class_weights: bool = False,
-        selected_joints: Optional[List[int]] = None,
         video_size: Tuple[int, int] = (224, 224),
         output_format: str = 'CTHW',
         augmentation_config: Optional[Dict[str, Any]] = None):
@@ -33,10 +28,7 @@ class SLRDataModule(pl.LightningDataModule):
         self.batch_size = batch_size
         self.num_workers = num_workers
         self.pin_memory = pin_memory
-        self.max_frames = max_frames
         self.target_fps = target_fps
-        self.use_class_weights = use_class_weights
-        self.selected_joints = selected_joints
         self.video_size = video_size
         self.output_format = output_format
         
@@ -47,7 +39,6 @@ class SLRDataModule(pl.LightningDataModule):
         self.test_dataset: Optional[MultimodalSLRDataset] = None
         
         self.num_classes: Optional[int] = None
-        self.class_weights: Optional[torch.Tensor] = None
 
     def prepare_data(self) -> None:
         if not Path(self.annotation_file).exists():
@@ -55,6 +46,7 @@ class SLRDataModule(pl.LightningDataModule):
         
         if not Path(self.data_root).exists():
             raise FileNotFoundError(f"Data root not found: {self.data_root}") 
+    
     def setup(self, stage: Optional[str] = None) -> None:
         if stage == "fit" or stage is None:
             self.train_dataset = MultimodalSLRDataset(
@@ -62,7 +54,6 @@ class SLRDataModule(pl.LightningDataModule):
                 data_root=self.data_root,
                 split='train',
                 modalities=self.modalities,
-                max_frames=self.max_frames,
                 video_transforms=self._get_video_transforms(train=True),
                 target_fps=self.target_fps,
                 output_format=self.output_format
@@ -73,7 +64,6 @@ class SLRDataModule(pl.LightningDataModule):
                 data_root=self.data_root,
                 split='val',
                 modalities=self.modalities,
-                max_frames=self.max_frames,
                 video_transforms=self._get_video_transforms(train=False),
                 target_fps=self.target_fps,
                 output_format=self.output_format
@@ -87,7 +77,6 @@ class SLRDataModule(pl.LightningDataModule):
                 data_root=self.data_root,
                 split='test',
                 modalities=self.modalities,
-                max_frames=self.max_frames,
                 video_transforms=self._get_video_transforms(train=False),
                 target_fps=self.target_fps,
                 output_format=self.output_format
@@ -95,18 +84,18 @@ class SLRDataModule(pl.LightningDataModule):
             
             if self.num_classes is None:
                 self.num_classes = self.test_dataset.num_classes
+    
     def train_dataloader(self) -> DataLoader:
-        sampler = None
         return DataLoader(
             self.train_dataset,
             batch_size=self.batch_size,
-            shuffle=(sampler is None),
-            sampler=sampler,
+            shuffle=True,
             num_workers=self.num_workers,
             pin_memory=self.pin_memory,
             drop_last=True,
             collate_fn=self._collate_fn
         )
+    
     def val_dataloader(self) -> DataLoader:
         return DataLoader(
             self.val_dataset,
@@ -128,6 +117,7 @@ class SLRDataModule(pl.LightningDataModule):
             drop_last=False,
             collate_fn=self._collate_fn,
         )
+    
     def _get_video_transforms(self, train: bool = True) -> Optional[VideoTransforms]:            
         if train:
             return VideoTransforms(
@@ -135,32 +125,23 @@ class SLRDataModule(pl.LightningDataModule):
                 normalize=True,
                 horizontal_flip_prob=self.augmentation_config.get('horizontal_flip_prob', 0.5),
                 color_jitter=self.augmentation_config.get('color_jitter', True),
-                temporal_crop=self.augmentation_config.get('temporal_crop', False),
-                max_frames=self.max_frames,
                 output_format=self.output_format
             )
+        else:
+            return VideoTransforms(
+                resize=self.video_size,
+                normalize=True,
+                horizontal_flip_prob=0.0,
+                color_jitter=False,
+                output_format=self.output_format
+            )
+    
     @staticmethod
     def _collate_fn(batch: List[Dict[str, torch.Tensor]]) -> Dict[str, torch.Tensor]:
         collated = {}
         
         for key in batch[0].keys():
-            if key in ['sign_id', 'person_id', 'sequence_length']:
-                collated[key] = torch.stack([item[key] for item in batch])
-            else:
-                collated[key] = torch.stack([item[key] for item in batch])
+            collated[key] = torch.stack([item[key] for item in batch])
         
         return collated
     
-    def get_dataset_statistics(self) -> Dict[str, Dict[str, Any]]:
-        stats = {}
-        
-        if self.train_dataset:
-            stats['train'] = self.train_dataset.get_statistics()
-        
-        if self.val_dataset:
-            stats['val'] = self.val_dataset.get_statistics()
-        
-        if self.test_dataset:
-            stats['test'] = self.test_dataset.get_statistics()
-        
-        return stats

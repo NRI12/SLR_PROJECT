@@ -12,7 +12,6 @@ import glob
 import hydra
 from omegaconf import DictConfig
 from datetime import datetime
-
 ssl._create_default_https_context = ssl._create_unverified_context
 import os
 

@@ -12,15 +12,14 @@ class VideoTransforms(nn.Module):
                  normalize: bool = True,
                  horizontal_flip_prob: float = 0.5,
                  color_jitter: bool = True,
-                 temporal_crop: bool = False,
-                 max_frames: int = 64,
+                 max_frames: Optional[int] = None,
                  output_format: str = 'CTHW'):
         super().__init__()
         self.resize = resize
         self.normalize = normalize
         self.horizontal_flip_prob = horizontal_flip_prob
         self.color_jitter = color_jitter
-        self.temporal_crop = temporal_crop
+        self.temporal_crop = False
         self.max_frames = max_frames
         self.output_format = output_format
         
@@ -47,10 +46,6 @@ class VideoTransforms(nn.Module):
         
         if self.normalize:
             video = torch.stack([self.norm_transform(frame) for frame in video])
-        
-        if self.temporal_crop and self.training and T > self.max_frames:
-            start_idx = random.randint(0, T - self.max_frames)
-            video = video[start_idx:start_idx + self.max_frames]
         
         if self.output_format == 'CTHW':
             video = video.permute(1, 0, 2, 3)

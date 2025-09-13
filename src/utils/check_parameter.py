@@ -1,6 +1,6 @@
 import hydra
 from omegaconf import DictConfig, OmegaConf
-from SLR_PROJECT.src.models.HRNET import get_pose_net
+from src.models.architectures.hrnet import get_pose_net
 import sys
 
 def to_hrnet_cfg(cfg: DictConfig):
