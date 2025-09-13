@@ -2,7 +2,7 @@ source_path: /work/21010294/ViSL-2/VISLv4
 output_path: /home/huong.nguyenthi2/SLR_PROJECT/data/annotation
 processed_output: /home/huong.nguyenthi2/SLR_PROJECT/data/processed
 
-train_ratio: 0.7
-val_ratio: 0.15
-test_ratio: 0.15
+train_ratio: 0.8
+val_ratio: 0.1
+test_ratio: 0.1
 

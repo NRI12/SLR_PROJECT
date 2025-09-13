@@ -95,7 +95,6 @@ class SLRDataModule(pl.LightningDataModule):
             
             if self.num_classes is None:
                 self.num_classes = self.test_dataset.num_classes
-
     def train_dataloader(self) -> DataLoader:
         sampler = None
         return DataLoader(
