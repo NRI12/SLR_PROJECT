@@ -2,7 +2,7 @@ import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from typing import Optional, List, Dict, Any, Tuple
 from pathlib import Path
-from .datasets import MultimodalSLRDataset
+from .datasets import MultimodalSLRDataset, SkeletonNPYDataset
 from .transforms import VideoTransforms
 
 class SLRDataModule(pl.LightningDataModule):
@@ -42,6 +42,9 @@ class SLRDataModule(pl.LightningDataModule):
         
         self.num_classes: Optional[int] = None
 
+        # Optional skeleton settings
+        self.use_skeleton = ('skeleton' in self.modalities) or (self.modalities == ['keypoint'])
+
     def prepare_data(self) -> None:
         if not Path(self.annotation_file).exists():
             raise FileNotFoundError(f"Annotation file not found: {self.annotation_file}")
@@ -51,44 +54,68 @@ class SLRDataModule(pl.LightningDataModule):
     
     def setup(self, stage: Optional[str] = None) -> None:
         if stage == "fit" or stage is None:
-            self.train_dataset = MultimodalSLRDataset(
-                annotation_file=self.annotation_file,
-                data_root=self.data_root,
-                split='train',
-                modalities=self.modalities,
-                target_frames=self.target_frames,
-                num_clips=1,
-                video_transforms=self._get_video_transforms(train=True),
-                target_fps=self.target_fps,
-                output_format=self.output_format
-            )
-            
-            self.val_dataset = MultimodalSLRDataset(
-                annotation_file=self.annotation_file,
-                data_root=self.data_root,
-                split='val',
-                modalities=self.modalities,
-                target_frames=self.target_frames,
-                num_clips=self.num_test_clips,
-                video_transforms=self._get_video_transforms(train=False),
-                target_fps=self.target_fps,
-                output_format=self.output_format
-            )
+            if self.use_skeleton:
+                self.train_dataset = SkeletonNPYDataset(
+                    annotation_file=self.annotation_file,
+                    data_root=self.data_root,
+                    split='train',
+                    target_frames=self.target_frames,
+                )
+                self.val_dataset = SkeletonNPYDataset(
+                    annotation_file=self.annotation_file,
+                    data_root=self.data_root,
+                    split='val',
+                    target_frames=self.target_frames,
+                    apply_augment=False,
+                )
+            else:
+                self.train_dataset = MultimodalSLRDataset(
+                    annotation_file=self.annotation_file,
+                    data_root=self.data_root,
+                    split='train',
+                    modalities=self.modalities,
+                    target_frames=self.target_frames,
+                    num_clips=1,
+                    video_transforms=self._get_video_transforms(train=True),
+                    target_fps=self.target_fps,
+                    output_format=self.output_format
+                )
+                
+                self.val_dataset = MultimodalSLRDataset(
+                    annotation_file=self.annotation_file,
+                    data_root=self.data_root,
+                    split='val',
+                    modalities=self.modalities,
+                    target_frames=self.target_frames,
+                    num_clips=self.num_test_clips,
+                    video_transforms=self._get_video_transforms(train=False),
+                    target_fps=self.target_fps,
+                    output_format=self.output_format
+                )
             
             self.num_classes = self.train_dataset.num_classes
         
         if stage == "test" or stage is None:
-            self.test_dataset = MultimodalSLRDataset(
-                annotation_file=self.annotation_file,
-                data_root=self.data_root,
-                split='test',
-                modalities=self.modalities,
-                target_frames=self.target_frames,
-                num_clips=self.num_test_clips,
-                video_transforms=self._get_video_transforms(train=False),
-                target_fps=self.target_fps,
-                output_format=self.output_format
-            )
+            if self.use_skeleton:
+                self.test_dataset = SkeletonNPYDataset(
+                    annotation_file=self.annotation_file,
+                    data_root=self.data_root,
+                    split='test',
+                    target_frames=self.target_frames,
+                    apply_augment=False,
+                )
+            else:
+                self.test_dataset = MultimodalSLRDataset(
+                    annotation_file=self.annotation_file,
+                    data_root=self.data_root,
+                    split='test',
+                    modalities=self.modalities,
+                    target_frames=self.target_frames,
+                    num_clips=self.num_test_clips,
+                    video_transforms=self._get_video_transforms(train=False),
+                    target_fps=self.target_fps,
+                    output_format=self.output_format
+                )
             
             if self.num_classes is None:
                 self.num_classes = self.test_dataset.num_classes

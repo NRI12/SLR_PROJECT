@@ -5,3 +5,12 @@ __pycache__/
 src/outputs
 *.log
 outputs
+src/results/
+src/logs/
+logs/
+lightning_logs/
+.hydra/
+wandb/
+tmp/
+temp/
+src/output_kvk/

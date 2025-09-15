@@ -4,13 +4,13 @@ import pytorch_lightning as pl
 from torchmetrics import Accuracy
 from src.models.architectures.r2plus1d import R2Plus1DModel
 
-class RGBLightningModule(pl.LightningModule):
+class FlowLightningModule(pl.LightningModule):
     def __init__(self, num_classes=100, learning_rate=1e-3, weight_decay=1e-4, 
                  num_test_clips=5, target_frames=16):
         super().__init__()
         self.save_hyperparameters()
         
-        self.model = R2Plus1DModel(num_classes=num_classes)
+        self.model = R2Plus1DModel(num_classes=num_classes, in_channels=2)
         self.criterion = nn.CrossEntropyLoss()
         self.num_test_clips = num_test_clips
         self.target_frames = target_frames
@@ -28,7 +28,7 @@ class RGBLightningModule(pl.LightningModule):
         return self.model(x)
     
     def training_step(self, batch, batch_idx):
-        x, y = batch['rgb'], batch['sign_id']
+        x, y = batch['optical_flow'], batch['sign_id']
         logits = self(x)
         loss = self.criterion(logits, y)
         self.train_acc(logits, y)
@@ -36,7 +36,7 @@ class RGBLightningModule(pl.LightningModule):
         self.log('train_acc', self.train_acc, on_step=True, on_epoch=True, prog_bar=True)
         return loss
     def validation_step(self, batch, batch_idx):
-        x, y = batch['rgb'], batch['sign_id']
+        x, y = batch['optical_flow'], batch['sign_id']
         logits = self(x)
         loss = self.criterion(logits, y)
         self.val_predictions.append(logits)
@@ -45,7 +45,7 @@ class RGBLightningModule(pl.LightningModule):
         return loss
     
     def test_step(self, batch, batch_idx):
-        x, y = batch['rgb'], batch['sign_id']
+        x, y = batch['optical_flow'], batch['sign_id']
         logits = self(x)
         loss = self.criterion(logits, y)
         self.test_predictions.append(logits)
@@ -60,11 +60,11 @@ class RGBLightningModule(pl.LightningModule):
         all_targets = torch.cat(self.val_targets, dim=0)
 
         num_videos = len(all_logits) // self.num_test_clips
-        grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)  # [N, clips, classes]
-        grouped_targets = all_targets.view(num_videos, self.num_test_clips)    # [N, clips]
+        grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)
+        grouped_targets = all_targets.view(num_videos, self.num_test_clips)
         
-        avg_logits = grouped_logits.mean(dim=1)  # [N, classes]
-        video_targets = grouped_targets[:, 0]    # [N] - same labels
+        avg_logits = grouped_logits.mean(dim=1)
+        video_targets = grouped_targets[:, 0]
         
         self.val_acc(avg_logits, video_targets)
         self.log('val_acc', self.val_acc, on_epoch=True, prog_bar=True)
@@ -90,7 +90,7 @@ class RGBLightningModule(pl.LightningModule):
         self.log('test_acc', self.test_acc, on_epoch=True)
         
         self.test_predictions.clear()
-        self.test_targets.clear()    
+        self.test_targets.clear()
     def configure_optimizers(self):
         optimizer = torch.optim.AdamW(
             self.parameters(), 
@@ -109,3 +109,4 @@ class RGBLightningModule(pl.LightningModule):
                 "monitor": "val_loss"
             }
         }
+

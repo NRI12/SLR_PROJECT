@@ -1,0 +1,28 @@
+data:
+  annotation_file: /home/huong.nguyenthi2/SLR_PROJECT/data/annotation/dataset.csv
+  data_root: /home/huong.nguyenthi2/SLR_PROJECT/data/processed
+  modalities: [keypoint]
+  batch_size: 8
+  num_workers: 4
+  target_frames: 64
+
+model:
+  learning_rate: 1e-3
+  weight_decay: 1e-4
+  keep_prob: 0.9
+  graph: src.models.architectures.graph_27.Graph
+  num_point: 27
+  in_channels: 2
+  num_person: 1
+  groups: 8
+  block_size: 41
+  graph_args: {}
+
+trainer:
+  max_epochs: 50
+  accelerator: auto
+  devices: 1
+  log_every_n_steps: 10
+  default_root_dir: /home/huong.nguyenthi2/SLR_PROJECT/src/results
+
+

@@ -7,9 +7,9 @@ import pytorch_lightning as pl
 from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from src.data.datamodules import SLRDataModule
-from src.models.modules.rgb_lightning import RGBLightningModule
+from src.models.modules.flow_lightning import FlowLightningModule
 
-@hydra.main(version_base=None, config_path="../../configs", config_name="model/rgb")
+@hydra.main(version_base=None, config_path="../../configs", config_name="model/flow")
 def train(cfg: DictConfig):
     print(cfg)
     os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.model.gpu_id)
@@ -20,7 +20,7 @@ def train(cfg: DictConfig):
     datamodule = SLRDataModule(
         annotation_file=cfg.model.datamodule.annotation_file,
         data_root=cfg.model.datamodule.data_root,
-        modalities=['rgb'],
+        modalities=['optical_flow'],
         batch_size=cfg.model.training.batch_size,
         video_size=(cfg.model.training.video_size, cfg.model.training.video_size),
         num_workers=cfg.model.training.num_workers
@@ -28,7 +28,7 @@ def train(cfg: DictConfig):
     
     datamodule.setup()
     
-    model = RGBLightningModule(
+    model = FlowLightningModule(
         num_classes=datamodule.num_classes,
         learning_rate=cfg.model.training.learning_rate,
         weight_decay=cfg.model.training.weight_decay,
@@ -38,14 +38,14 @@ def train(cfg: DictConfig):
     
     wandb_logger = WandbLogger(
         project=cfg.model.logging.wandb_project,
-        name=f"r2plus1d-{cfg.model.training.experiment_name}",
+        name=f"r2plus1d-flow-{cfg.model.training.experiment_name}",
         log_model=True,
-        tags=["rgb", "r2plus1d"]
+        tags=["optical_flow", "r2plus1d"]
     )
     
     checkpoint_callback = ModelCheckpoint(
         dirpath=cfg.model.training.checkpoint_dir,
-        filename='r2plus1d-{epoch:02d}-{val_acc:.4f}',
+        filename='r2plus1d-flow-{epoch:02d}-{val_acc:.4f}',
         monitor='val_acc',
         mode='max',
         save_top_k=3,
@@ -64,7 +64,7 @@ def train(cfg: DictConfig):
         max_epochs=cfg.model.training.max_epochs,
         accelerator='cpu',
         devices=1,
-        num_sanity_val_steps=0,
+        num_sanity_val_steps=10,
         # logger=wandb_logger,
         callbacks=[checkpoint_callback, early_stopping],
         log_every_n_steps=cfg.model.logging.log_every_n_steps,
@@ -80,3 +80,4 @@ def train(cfg: DictConfig):
 
 if __name__ == "__main__":
     train()
+
