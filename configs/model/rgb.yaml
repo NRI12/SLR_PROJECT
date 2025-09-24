@@ -2,26 +2,43 @@ defaults:
   - _self_
   - /data: dataset
 
-gpu_id: [2,7]
+gpu_id: [5,6]
 
 datamodule: 
   annotation_file: /home/huong.nguyenthi2/SLR_PROJECT/data/annotation/dataset.csv
   data_root: /home/huong.nguyenthi2/SLR_PROJECT/data/processed
 
 training:
-  experiment_name: uniform_clips
+  experiment_name: rgb_training
   batch_size: 32
-  target_frames: 16        
-  num_test_clips: 5        
-  video_size: 112        
+  target_frames: 16
+  num_test_clips: 5
+  video_size: 112
   num_workers: 4
-  learning_rate: 1e-3
+  learning_rate: 2e-3
   weight_decay: 1e-4
-  max_epochs: 1
-  patience: 15
-  val_check_interval: 0.5
+  max_epochs: 100
+  patience: 20
+  val_check_interval: 1
   checkpoint_dir: /home/huong.nguyenthi2/SLR_PROJECT/checkpoints/rgb
 
 logging:
   wandb_project: slr-rgb-training
-  log_every_n_steps: 20
+  log_every_n_steps: 50
+
+validation:
+  min_clips_per_video: 5
+
+augmentation:
+  horizontal_flip_prob: 0.5
+  color_jitter: true
+
+optimizer:
+  name: adamw
+  weight_decay: 1e-4
+  eps: 1e-8
+
+scheduler:
+  name: cosine_annealing
+  T_max: 100
+  eta_min: 1e-7

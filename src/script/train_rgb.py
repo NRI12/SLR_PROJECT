@@ -9,9 +9,7 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from src.data.datamodules import SLRDataModule
 from src.models.modules.rgb_lightning import RGBLightningModule
 from pytorch_lightning.utilities import rank_zero_only
-from pytorch_lightning.profilers import SimpleProfiler
 
-profiler = SimpleProfiler()
 @hydra.main(version_base=None, config_path="../../configs", config_name="model/rgb")
 def train(cfg: DictConfig):
     print_fn = rank_zero_only(print)
@@ -61,23 +59,23 @@ def train(cfg: DictConfig):
         tags=["rgb", "r2plus1d"]
     )
     
-    # Add TensorBoard logger for local logging
-    tb_logger = TensorBoardLogger(
-        save_dir="lightning_logs",
-        name="rgb_training",
-        version=None
-    )
+    # # Add TensorBoard logger for local logging
+    # tb_logger = TensorBoardLogger(
+    #     save_dir="lightning_logs",
+    #     name="rgb_training",
+    #     version=None
+    # )
     
     # Use both loggers
     # loggers = [wandb_logger, tb_logger]
-    loggers = [tb_logger]
+    # loggers = [tb_logger]
 
     checkpoint_callback = ModelCheckpoint(
         dirpath=cfg.model.training.checkpoint_dir,
         filename='r2plus1d-{epoch:02d}-{val_top1:.4f}',
         monitor='val_top1',
         mode='max',
-        save_top_k=3,
+        save_top_k=1,
         save_last=True,
         verbose=True
     )
@@ -95,16 +93,14 @@ def train(cfg: DictConfig):
         devices=devices,
         strategy=strategy,
         num_sanity_val_steps=0,
-        logger=loggers,
+        # logger=loggers,
         callbacks=[checkpoint_callback, early_stopping],
-        log_every_n_steps=cfg.model.logging.log_every_n_steps,
-        val_check_interval=cfg.model.training.val_check_interval,
+        # log_every_n_steps=cfg.model.logging.log_every_n_steps,
+        # val_check_interval=cfg.model.training.val_check_interval,
         precision="16-mixed",
         enable_progress_bar=True,
-        profiler=profiler,
         # gradient_clip_val=1.0
     )
-    print(profiler.summary())
 
     trainer.fit(model, datamodule)
     trainer.test(model, datamodule, ckpt_path='best')

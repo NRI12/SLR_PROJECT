@@ -36,7 +36,6 @@ class MultimodalSLRDataset(Dataset):
         self.class_to_idx = {cls: idx for idx, cls in enumerate(sorted(self.df['sign_id'].unique()))}
         
         self.video_transforms = video_transforms
-
         if self.video_transforms:
             self.video_transforms.training = (split == 'train')
     
@@ -68,12 +67,15 @@ class MultimodalSLRDataset(Dataset):
         sample = {
             'sign_id': torch.tensor(self.class_to_idx[sign_id], dtype=torch.long),
             'person_id': torch.tensor(person_id, dtype=torch.long),
+            'video_idx': torch.tensor(video_idx, dtype=torch.long),
+            'clip_idx': torch.tensor(clip_idx, dtype=torch.long),
         }
+        
         for modality in self.modalities:
             if modality not in data:
                 raise ValueError(f"Modality '{modality}' not found in data.")
             
-            if modality in ['rgb', 'optical_flow'] :
+            if modality in ['rgb', 'optical_flow']:
                 tensor_data = self._process_modality(data[modality], modality, clip_idx)
                 sample[modality] = tensor_data
         return sample
@@ -86,42 +88,44 @@ class MultimodalSLRDataset(Dataset):
             if self.video_transforms:
                 tensor_data = self.video_transforms(tensor_data)
         elif modality == 'optical_flow':
-            if tensor_data.dim() == 4:  # [T, H, W, C]
+            if tensor_data.dim() == 4:
                 if self.output_format == 'CTHW':
                     tensor_data = tensor_data.permute(3, 0, 1, 2)
                 elif self.output_format == 'TCHW':
-                    # Already [T, H, W, C] -> [T, C, H, W]
                     tensor_data = tensor_data.permute(0, 3, 1, 2)
                 else:
                     raise ValueError(f"Unsupported output format: {self.output_format}")
-        return tensor_data    
+        return tensor_data
+    
     def _sample_clips(self, data: torch.Tensor, clip_idx: int) -> torch.Tensor:
         T = data.shape[0]
-        
-        # Nếu video ngắn hơn target_frames, repeat
         if T < self.target_frames:
             repeat_factor = (self.target_frames + T - 1) // T
             data = data.repeat(repeat_factor, *([1] * (data.dim() - 1)))
             T = data.shape[0]
         
         if self.split == 'train':
-            # Training: random crop
             if T == self.target_frames:
                 return data
             start = torch.randint(0, T - self.target_frames + 1, (1,)).item()
             return data[start:start + self.target_frames]
-        
         else:
-            # Val/Test: uniform sampling
-            segment_length = T // self.num_clips
-            start = clip_idx * segment_length
-            
-            if start + self.target_frames > T:
-                start = T - self.target_frames
-                
-            return data[start:start + self.target_frames]    
+            if T <= self.target_frames:
+                return data[:self.target_frames]
+            if self.num_clips == 1:
+                start = (T - self.target_frames) // 2
+            else:
+                available_starts = T - self.target_frames
+                if available_starts <= 0:
+                    start = 0
+                else:
+                    starts = np.linspace(0, available_starts, self.num_clips, dtype=int)
+                    start = starts[clip_idx]
+            return data[start:start + self.target_frames]
+    
     def _extract_folder_name(self, video_path: str) -> str:
         return Path(video_path).parts[0]
+
 
 
 class SkeletonNPYDataset(Dataset):
