@@ -14,3 +14,10 @@ wandb/
 tmp/
 temp/
 src/output_kvk/
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.joblib
+*.pkl
+*.sav

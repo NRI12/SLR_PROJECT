@@ -2,17 +2,35 @@ import os
 import wandb
 import hydra
 import torch
-from omegaconf import DictConfig
+from omegaconf import DictConfig, ListConfig
 import pytorch_lightning as pl
-from pytorch_lightning.loggers import WandbLogger
+from pytorch_lightning.loggers import WandbLogger, TensorBoardLogger
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
 from src.data.datamodules import SLRDataModule
 from src.models.modules.rgb_lightning import RGBLightningModule
+from pytorch_lightning.utilities import rank_zero_only
+from pytorch_lightning.profilers import SimpleProfiler
 
+profiler = SimpleProfiler()
 @hydra.main(version_base=None, config_path="../../configs", config_name="model/rgb")
 def train(cfg: DictConfig):
-    print(cfg)
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(cfg.model.gpu_id)
+    print_fn = rank_zero_only(print)
+    print_fn(cfg)
+    gpu_ids = getattr(cfg.model, 'gpu_ids', None)
+    gpu_id_value = getattr(cfg.model, 'gpu_id', None)
+    if gpu_ids is None and isinstance(gpu_id_value, (list, tuple, ListConfig)):
+        gpu_ids = list(gpu_id_value)
+
+    if gpu_ids:
+        os.environ["CUDA_VISIBLE_DEVICES"] = ",".join(str(x) for x in gpu_ids)
+        devices = len(gpu_ids)
+        strategy = 'ddp'
+    else:
+        if isinstance(gpu_id_value, ListConfig):
+            gpu_id_value = list(gpu_id_value)[0]
+        os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id_value)
+        devices = 1
+        strategy = 'auto'
 
     pl.seed_everything(42)
     # wandb.login()
@@ -43,10 +61,21 @@ def train(cfg: DictConfig):
         tags=["rgb", "r2plus1d"]
     )
     
+    # Add TensorBoard logger for local logging
+    tb_logger = TensorBoardLogger(
+        save_dir="lightning_logs",
+        name="rgb_training",
+        version=None
+    )
+    
+    # Use both loggers
+    # loggers = [wandb_logger, tb_logger]
+    loggers = [tb_logger]
+
     checkpoint_callback = ModelCheckpoint(
         dirpath=cfg.model.training.checkpoint_dir,
-        filename='r2plus1d-{epoch:02d}-{val_acc:.4f}',
-        monitor='val_acc',
+        filename='r2plus1d-{epoch:02d}-{val_top1:.4f}',
+        monitor='val_top1',
         mode='max',
         save_top_k=3,
         save_last=True,
@@ -54,7 +83,7 @@ def train(cfg: DictConfig):
     )
     
     early_stopping = EarlyStopping(
-        monitor='val_acc',
+        monitor='val_top1',
         mode='max',
         patience=cfg.model.training.patience,
         verbose=True
@@ -62,17 +91,21 @@ def train(cfg: DictConfig):
     
     trainer = pl.Trainer(
         max_epochs=cfg.model.training.max_epochs,
-        accelerator='cpu',
-        devices=1,
+        accelerator='gpu',
+        devices=devices,
+        strategy=strategy,
         num_sanity_val_steps=0,
-        # logger=wandb_logger,
+        logger=loggers,
         callbacks=[checkpoint_callback, early_stopping],
         log_every_n_steps=cfg.model.logging.log_every_n_steps,
         val_check_interval=cfg.model.training.val_check_interval,
-        precision=16,
-        gradient_clip_val=1.0
+        precision="16-mixed",
+        enable_progress_bar=True,
+        profiler=profiler,
+        # gradient_clip_val=1.0
     )
-    
+    print(profiler.summary())
+
     trainer.fit(model, datamodule)
     trainer.test(model, datamodule, ckpt_path='best')
     

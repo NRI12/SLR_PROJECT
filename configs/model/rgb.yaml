@@ -2,7 +2,7 @@ defaults:
   - _self_
   - /data: dataset
 
-gpu_id: 0
+gpu_id: [2,7]
 
 datamodule: 
   annotation_file: /home/huong.nguyenthi2/SLR_PROJECT/data/annotation/dataset.csv
@@ -10,14 +10,14 @@ datamodule:
 
 training:
   experiment_name: uniform_clips
-  batch_size: 8
+  batch_size: 32
   target_frames: 16        
   num_test_clips: 5        
   video_size: 112        
   num_workers: 4
   learning_rate: 1e-3
   weight_decay: 1e-4
-  max_epochs: 100
+  max_epochs: 1
   patience: 15
   val_check_interval: 0.5
   checkpoint_dir: /home/huong.nguyenthi2/SLR_PROJECT/checkpoints/rgb

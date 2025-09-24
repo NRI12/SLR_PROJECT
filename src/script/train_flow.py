@@ -45,8 +45,8 @@ def train(cfg: DictConfig):
     
     checkpoint_callback = ModelCheckpoint(
         dirpath=cfg.model.training.checkpoint_dir,
-        filename='r2plus1d-flow-{epoch:02d}-{val_acc:.4f}',
-        monitor='val_acc',
+        filename='r2plus1d-flow-{epoch:02d}-{val_top1:.4f}',
+        monitor='val_top1',
         mode='max',
         save_top_k=3,
         save_last=True,
@@ -54,7 +54,7 @@ def train(cfg: DictConfig):
     )
     
     early_stopping = EarlyStopping(
-        monitor='val_acc',
+        monitor='val_top1',
         mode='max',
         patience=cfg.model.training.patience,
         verbose=True
@@ -62,7 +62,7 @@ def train(cfg: DictConfig):
     
     trainer = pl.Trainer(
         max_epochs=cfg.model.training.max_epochs,
-        accelerator='cpu',
+        accelerator='gpu',
         devices=1,
         num_sanity_val_steps=10,
         # logger=wandb_logger,
@@ -70,7 +70,8 @@ def train(cfg: DictConfig):
         log_every_n_steps=cfg.model.logging.log_every_n_steps,
         val_check_interval=cfg.model.training.val_check_interval,
         precision=16,
-        gradient_clip_val=1.0
+        gradient_clip_val=1.0,
+        enable_progress_bar=False
     )
     
     trainer.fit(model, datamodule)

@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import pytorch_lightning as pl
-from torchmetrics import Accuracy
+from torchmetrics.classification import MulticlassAccuracy
 from src.models.architectures.r2plus1d import R2Plus1DModel
 
 class RGBLightningModule(pl.LightningModule):
@@ -15,9 +15,12 @@ class RGBLightningModule(pl.LightningModule):
         self.num_test_clips = num_test_clips
         self.target_frames = target_frames
         
-        self.train_acc = Accuracy(task="multiclass", num_classes=num_classes)
-        self.val_acc = Accuracy(task="multiclass", num_classes=num_classes)
-        self.test_acc = Accuracy(task="multiclass", num_classes=num_classes)
+        self.train_top1 = MulticlassAccuracy(num_classes=num_classes, top_k=1)
+        self.train_top5 = MulticlassAccuracy(num_classes=num_classes, top_k=5)
+        self.val_top1 = MulticlassAccuracy(num_classes=num_classes, top_k=1)
+        self.val_top5 = MulticlassAccuracy(num_classes=num_classes, top_k=5)
+        self.test_top1 = MulticlassAccuracy(num_classes=num_classes, top_k=1)
+        self.test_top5 = MulticlassAccuracy(num_classes=num_classes, top_k=5)
         
         self.val_predictions = []
         self.val_targets = []
@@ -31,43 +34,63 @@ class RGBLightningModule(pl.LightningModule):
         x, y = batch['rgb'], batch['sign_id']
         logits = self(x)
         loss = self.criterion(logits, y)
-        self.train_acc(logits, y)
-        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
-        self.log('train_acc', self.train_acc, on_step=True, on_epoch=True, prog_bar=True)
+        self.log('train_loss', loss, on_step=False, on_epoch=True, prog_bar=True, sync_dist=True)
+        self.log('train_top1', self.train_top1(logits, y), on_step=False, on_epoch=True, prog_bar=True, sync_dist=True)
+        self.log('train_top5', self.train_top5(logits, y), on_step=False, on_epoch=True, sync_dist=True)
         return loss
     def validation_step(self, batch, batch_idx):
         x, y = batch['rgb'], batch['sign_id']
         logits = self(x)
         loss = self.criterion(logits, y)
+        
         self.val_predictions.append(logits)
         self.val_targets.append(y)
-        self.log('val_loss', loss, on_epoch=True, prog_bar=True)
+        
+        self.log('val_loss', loss, on_epoch=True, prog_bar=True, sync_dist=True)
+        
+        val_top1 = self.val_top1(logits, y)
+        val_top5 = self.val_top5(logits, y)
+        self.log('val_clip_top1', val_top1, on_epoch=True, sync_dist=True)
+        self.log('val_clip_top5', val_top5, on_epoch=True, sync_dist=True)
+        
         return loss
-    
     def test_step(self, batch, batch_idx):
         x, y = batch['rgb'], batch['sign_id']
         logits = self(x)
         loss = self.criterion(logits, y)
+        
         self.test_predictions.append(logits)
         self.test_targets.append(y)
-        self.log('test_loss', loss, on_epoch=True)
+        
+        self.log('test_loss', loss, on_epoch=True, sync_dist=True)
+        
+        test_top1 = self.test_top1(logits, y)
+        test_top5 = self.test_top5(logits, y)
+        self.log('test_clip_top1', test_top1, on_epoch=True, sync_dist=True)
+        self.log('test_clip_top5', test_top5, on_epoch=True, sync_dist=True)
+        
         return logits
     
     def on_validation_epoch_end(self):
         if not self.val_predictions:
             return
+            
         all_logits = torch.cat(self.val_predictions, dim=0)
         all_targets = torch.cat(self.val_targets, dim=0)
 
-        num_videos = len(all_logits) // self.num_test_clips
-        grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)  # [N, clips, classes]
-        grouped_targets = all_targets.view(num_videos, self.num_test_clips)    # [N, clips]
-        
-        avg_logits = grouped_logits.mean(dim=1)  # [N, classes]
-        video_targets = grouped_targets[:, 0]    # [N] - same labels
-        
-        self.val_acc(avg_logits, video_targets)
-        self.log('val_acc', self.val_acc, on_epoch=True, prog_bar=True)
+        if len(all_logits) % self.num_test_clips != 0:
+            self.log('val_top1', self.val_top1(all_logits, all_targets), on_epoch=True, prog_bar=True, sync_dist=True)
+            self.log('val_top5', self.val_top5(all_logits, all_targets), on_epoch=True, sync_dist=True)
+        else:
+            num_videos = len(all_logits) // self.num_test_clips
+            grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)  # [N, clips, classes]
+            grouped_targets = all_targets.view(num_videos, self.num_test_clips)    # [N, clips]
+            
+            avg_logits = grouped_logits.mean(dim=1)  # [N, classes]
+            video_targets = grouped_targets[:, 0]    # [N] - same labels
+            
+            self.log('val_top1', self.val_top1(avg_logits, video_targets), on_epoch=True, prog_bar=True, sync_dist=True)
+            self.log('val_top5', self.val_top5(avg_logits, video_targets), on_epoch=True, sync_dist=True)
         
         self.val_predictions.clear()
         self.val_targets.clear()
@@ -79,15 +102,19 @@ class RGBLightningModule(pl.LightningModule):
         all_logits = torch.cat(self.test_predictions, dim=0)
         all_targets = torch.cat(self.test_targets, dim=0)
         
-        num_videos = len(all_logits) // self.num_test_clips
-        grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)
-        grouped_targets = all_targets.view(num_videos, self.num_test_clips)
-        
-        avg_logits = grouped_logits.mean(dim=1)
-        video_targets = grouped_targets[:, 0]
-        
-        self.test_acc(avg_logits, video_targets)
-        self.log('test_acc', self.test_acc, on_epoch=True)
+        if len(all_logits) % self.num_test_clips != 0:
+            self.log('test_top1', self.test_top1(all_logits, all_targets), on_epoch=True, sync_dist=True)
+            self.log('test_top5', self.test_top5(all_logits, all_targets), on_epoch=True, sync_dist=True)
+        else:
+            num_videos = len(all_logits) // self.num_test_clips
+            grouped_logits = all_logits.view(num_videos, self.num_test_clips, -1)
+            grouped_targets = all_targets.view(num_videos, self.num_test_clips)
+            
+            avg_logits = grouped_logits.mean(dim=1)
+            video_targets = grouped_targets[:, 0]
+            
+            self.log('test_top1', self.test_top1(avg_logits, video_targets), on_epoch=True, sync_dist=True)
+            self.log('test_top5', self.test_top5(avg_logits, video_targets), on_epoch=True, sync_dist=True)
         
         self.test_predictions.clear()
         self.test_targets.clear()    

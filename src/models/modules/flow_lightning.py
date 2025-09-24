@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import pytorch_lightning as pl
 from torchmetrics import Accuracy
+from torchmetrics.classification import MulticlassAccuracy
 from src.models.architectures.r2plus1d import R2Plus1DModel
 
 class FlowLightningModule(pl.LightningModule):
@@ -15,9 +16,12 @@ class FlowLightningModule(pl.LightningModule):
         self.num_test_clips = num_test_clips
         self.target_frames = target_frames
         
-        self.train_acc = Accuracy(task="multiclass", num_classes=num_classes)
-        self.val_acc = Accuracy(task="multiclass", num_classes=num_classes)
-        self.test_acc = Accuracy(task="multiclass", num_classes=num_classes)
+        self.train_top1 = MulticlassAccuracy(num_classes=num_classes, top_k=1)
+        self.train_top5 = MulticlassAccuracy(num_classes=num_classes, top_k=5)
+        self.val_top1 = MulticlassAccuracy(num_classes=num_classes, top_k=1)
+        self.val_top5 = MulticlassAccuracy(num_classes=num_classes, top_k=5)
+        self.test_top1 = MulticlassAccuracy(num_classes=num_classes, top_k=1)
+        self.test_top5 = MulticlassAccuracy(num_classes=num_classes, top_k=5)
         
         self.val_predictions = []
         self.val_targets = []
@@ -31,9 +35,9 @@ class FlowLightningModule(pl.LightningModule):
         x, y = batch['optical_flow'], batch['sign_id']
         logits = self(x)
         loss = self.criterion(logits, y)
-        self.train_acc(logits, y)
-        self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
-        self.log('train_acc', self.train_acc, on_step=True, on_epoch=True, prog_bar=True)
+        self.log('train_loss', loss, on_step=False, on_epoch=True, prog_bar=True)
+        self.log('train_top1', self.train_top1(logits, y), on_step=False, on_epoch=True, prog_bar=True)
+        self.log('train_top5', self.train_top5(logits, y), on_step=False, on_epoch=True)
         return loss
     def validation_step(self, batch, batch_idx):
         x, y = batch['optical_flow'], batch['sign_id']
@@ -66,8 +70,8 @@ class FlowLightningModule(pl.LightningModule):
         avg_logits = grouped_logits.mean(dim=1)
         video_targets = grouped_targets[:, 0]
         
-        self.val_acc(avg_logits, video_targets)
-        self.log('val_acc', self.val_acc, on_epoch=True, prog_bar=True)
+        self.log('val_top1', self.val_top1(avg_logits, video_targets), on_epoch=True, prog_bar=True)
+        self.log('val_top5', self.val_top5(avg_logits, video_targets), on_epoch=True)
         
         self.val_predictions.clear()
         self.val_targets.clear()
@@ -86,8 +90,8 @@ class FlowLightningModule(pl.LightningModule):
         avg_logits = grouped_logits.mean(dim=1)
         video_targets = grouped_targets[:, 0]
         
-        self.test_acc(avg_logits, video_targets)
-        self.log('test_acc', self.test_acc, on_epoch=True)
+        self.log('test_top1', self.test_top1(avg_logits, video_targets), on_epoch=True)
+        self.log('test_top5', self.test_top5(avg_logits, video_targets), on_epoch=True)
         
         self.test_predictions.clear()
         self.test_targets.clear()

@@ -1,3 +1,4 @@
+from tkinter.constants import FALSE
 import pytorch_lightning as pl
 from torch.utils.data import DataLoader
 from typing import Optional, List, Dict, Any, Tuple
@@ -127,9 +128,9 @@ class SLRDataModule(pl.LightningDataModule):
             shuffle=True,
             num_workers=self.num_workers,
             pin_memory=self.pin_memory,
-            drop_last=True,
+            persistent_workers=True,
+            prefetch_factor=4,
         )
-    
     def val_dataloader(self) -> DataLoader:
         return DataLoader(
             self.val_dataset,
@@ -137,7 +138,6 @@ class SLRDataModule(pl.LightningDataModule):
             shuffle=False,
             num_workers=self.num_workers,
             pin_memory=self.pin_memory,
-            drop_last=False,
         )
 
     def test_dataloader(self) -> DataLoader:
@@ -147,7 +147,6 @@ class SLRDataModule(pl.LightningDataModule):
             shuffle=False,
             num_workers=self.num_workers,
             pin_memory=self.pin_memory,
-            drop_last=False,
         )
     
     def _get_video_transforms(self, train: bool = True) -> Optional[VideoTransforms]:            

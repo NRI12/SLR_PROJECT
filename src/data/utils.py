@@ -11,7 +11,7 @@ def load_multimodal_data(base_path: str, filename: str) -> Dict[str, np.ndarray]
     for modality in modalities:
         file_path = base_path / modality / filename
         if file_path.exists():
-            data[modality] = np.load(file_path)
+            data[modality] = np.load(file_path, mmap_mode='r')
     return data
 
 def random_temporal_crop(x, target_frames):
